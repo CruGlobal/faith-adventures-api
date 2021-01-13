@@ -1,0 +1,20 @@
+require: rubocop-rspec
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "bin/**/*"
+    - "db/schema.rb"
+Style/Documentation:
+  Enabled: false
+Metrics/MethodLength:
+  Exclude:
+    - "db/migrate/**/*"
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+RSpec/NestedGroups:
+  Max: 5
