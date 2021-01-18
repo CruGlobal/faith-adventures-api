@@ -5,6 +5,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.2'
 
+gem 'acts_as_list'
+gem 'acts-as-taggable-on', '~> 7.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'graphql'
 gem 'graphql-batch'
