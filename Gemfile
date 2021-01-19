@@ -8,6 +8,7 @@ ruby '2.7.2'
 gem 'acts_as_list'
 gem 'acts-as-taggable-on', '~> 7.0'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'firebase_id_token'
 gem 'graphql'
 gem 'graphql-batch'
 gem 'hiredis'
@@ -20,6 +21,7 @@ gem 'rails', '~> 6.0.3'
 gem 'redis'
 gem 'rollbar'
 gem 'sidekiq'
+gem 'sidekiq-cron'
 
 group :test do
   gem 'database_cleaner-active_record'

@@ -9,52 +9,55 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:sub) }
 
   describe '.from_token' do
-    subject(:user) { described_class.find_by(sub: '248289761001') }
-
     let(:attributes) do
       {
-        'sub' => '248289761001',
-        'name' => 'Jane Josephine Doe',
-        'given_name' => 'Jane',
-        'family_name' => 'Doe',
-        'middle_name' => 'Josephine',
-        'nickname' => 'JJ',
-        'preferred_username' => 'j.doe',
-        'profile' => 'http://exampleco.com/janedoe',
-        'picture' => 'http://exampleco.com/janedoe/me.jpg',
-        'website' => 'http://exampleco.com',
-        'email' => 'janedoe@exampleco.com',
+        'iss' => 'https://securetoken.google.com/firebase-id-token',
+        'name' => 'Ugly Bob',
+        'picture' => 'https://someurl.com/photo.jpg',
+        'aud' => 'firebase-id-token',
+        'auth_time' => 1_492_981_192,
+        'user_id' => 'theUserID',
+        'sub' => 'theUserID',
+        'iat' => 30.minutes.ago.to_i,
+        'exp' => 30.minutes.from_now.to_i,
+        'email' => 'uglybob@emailurl.com',
         'email_verified' => true,
-        'gender' => 'female',
-        'birthdate' => '1972-03-31',
-        'zoneinfo' => 'America/Los_Angeles',
-        'locale' => 'en-US',
-        'phone_number' => '+1 (111) 222-3434',
-        'phone_number_verified' => false,
-        'address' => {
-          'country' => 'us'
+        'firebase' => {
+          'identities' => {
+            'google.com' => [
+              '1010101010101010101'
+            ],
+            'email' => [
+              'uglybob@emailurl.com'
+            ]
+          },
+          'sign_in_provider' => 'google.com'
         }
       }
     end
-
-    before do
-      allow(User::JsonWebTokenService).to receive(:verify).with('token').and_return({ 'sub' => '248289761001' })
-      stub_request(:get, 'https://example.com/userinfo')
-        .with(headers: { 'Authorization' => 'Bearer token' })
-        .and_return(headers: { 'Content-Type' => 'application/json' }, body: attributes.to_json)
+    let(:token) do
+      JWT.encode attributes, OpenSSL::PKey::RSA.new(FirebaseIdToken::Testing::Certificates.private_key), 'RS256'
     end
 
+    before { FirebaseIdToken.test! }
+
     it 'creates user' do
-      expect(described_class.from_token('token').attributes).to include attributes.slice(
-        'sub', 'given_name', 'family_name', 'nickname', 'name', 'picture', 'locale', 'email', 'email_verified'
+      expect(described_class.from_token(token).attributes).to include attributes.slice(
+        'sub', 'name', 'picture', 'email', 'email_verified'
       )
     end
 
     context 'when user exists' do
-      subject!(:user) { create(:user, sub: '248289761001') }
+      subject!(:user) { create(:user, sub: 'theUserID') }
 
       it 'returns user' do
-        expect(described_class.from_token('token')).to eq user
+        expect(described_class.from_token(token).attributes).to include attributes.slice(
+          'sub', 'name', 'picture', 'email', 'email_verified'
+        )
+      end
+
+      it 'does not create user' do
+        expect { described_class.from_token(token) }.not_to change(described_class, :count)
       end
     end
   end

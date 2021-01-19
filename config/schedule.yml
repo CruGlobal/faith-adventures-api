@@ -1,0 +1,3 @@
+cron_fetch_firebase_certificates_worker:
+  cron: "*/30 * * * *"
+  class: "Cron::FetchFirebaseCertificatesWorker"
