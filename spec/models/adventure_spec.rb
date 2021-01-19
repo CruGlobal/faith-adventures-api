@@ -12,4 +12,17 @@ RSpec.describe Adventure, type: :model do
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:locale) }
   it { is_expected.to validate_inclusion_of(:locale).in_array(I18n.available_locales.map(&:to_s)) }
+
+  describe '.published' do
+    let(:adventure) { create(:adventure, published: true) }
+
+    before do
+      create(:adventure, published: false)
+      create(:adventure, published: true, template: create(:adventure))
+    end
+
+    it 'returns published with no template' do
+      expect(described_class.published).to eq [adventure]
+    end
+  end
 end

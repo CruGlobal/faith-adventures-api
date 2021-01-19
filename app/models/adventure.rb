@@ -8,4 +8,5 @@ class Adventure < ApplicationRecord
   has_many :steps, dependent: :delete_all
   validates :name, :locale, presence: true
   validates :locale, inclusion: { in: I18n.available_locales.map(&:to_s) }
+  scope :published, -> { where(published: true, template_id: nil) }
 end
