@@ -1,0 +1,304 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.arclight.org/v2/media-components/1_jf-0-0?apiKey=1234567890
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Language:
+      - en-US
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 24 Jan 2021 21:56:49 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1363'
+      Connection:
+      - keep-alive
+      Server:
+      - Apache/2.4.46 () PHP/7.4.11
+      X-Powered-By:
+      - PHP/7.4.11
+      Set-Cookie:
+      - PHPSESSID=5tbtuthcn8ptb22r6249q4mbnu; path=/; HttpOnly; SameSite=lax
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Etag:
+      - '"c10af4251efa0eef005495f27b96a464-gzip"'
+      Last-Modified:
+      - Sat, 23 Jan 2021 23:29:57 GMT
+      Expires:
+      - Sun, 24 Jan 2021 21:56:49 GMT
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"mediaComponentId":"1_jf-0-0","componentType":"content","subType":"featureFilm","contentType":"video","imageUrls":{"thumbnail":"https://d1wl257kev7hsz.cloudfront.net/cinematics/1_jf-0-0.thumbnail.jpg","videoStill":"https://d1wl257kev7hsz.cloudfront.net/cinematics/1_jf-0-0.videoStill.jpg","hd":"https://d1wl257kev7hsz.cloudfront.net/cinematics/Classic_art_HD.jpg","mobileCinematicHigh":"https://d1wl257kev7hsz.cloudfront.net/cinematics/1_jf-0-0.mobileCinematicHigh.jpg","mobileCinematicLow":"https://d1wl257kev7hsz.cloudfront.net/cinematics/1_jf-0-0.mobileCinematicLow.jpg","medium":"https://d1wl257kev7hsz.cloudfront.net/cinematics/Classic_art_med.jpg","small":"https://d1wl257kev7hsz.cloudfront.net/cinematics/Classic_art_sm.jpg","banner440x250":"https://d1wl257kev7hsz.cloudfront.net/cinematics/JESUS-440x250.jpg","banner600x338":"https://d1wl257kev7hsz.cloudfront.net/cinematics/JESUS-600x338.jpg","banner800x412":"https://d1wl257kev7hsz.cloudfront.net/cinematics/JESUS-880x412.jpg","banner880x441":"https://d1wl257kev7hsz.cloudfront.net/cinematics/JESUS-880x441.jpg","mobileCinematicVeryLow":"https://d1wl257kev7hsz.cloudfront.net/cinematics/1_jf-0-0.mobileCinematicVeryLow.webp"},"lengthInMilliseconds":7673754,"containsCount":61,"isDownloadable":false,"downloadSizes":{},"bibleCitations":[],"primaryLanguageId":529,"title":"JESUS","shortDescription":"Jesus
+        constantly surprises and confounds people, from His miraculous birth to His
+        rise from the grave. Follow His life through excerpts from the Book of Luke,
+        all the miracles, the teachings, and the passion.","longDescription":"This
+        film is a perfect introduction to Jesus through the Gospel of Luke. Jesus
+        constantly surprises and confounds people, from His miraculous birth to His
+        rise from the grave. Follow His life through excerpts from the Book of Luke,
+        all the miracles, the teachings, and the passion. \n\nGod creates everything
+        and loves mankind. But mankind disobeys God. God and mankind are separated,
+        but God loves mankind so much, He arranges redemption for mankind. He sends
+        his Son Jesus to be a perfect sacrifice to make amends for us.\n\nBefore Jesus
+        arrives, God prepares mankind. Prophets speak of the birth, the life, and
+        the death of Jesus.\n\nJesus attracts attention. He teaches in parables no
+        one really understands, gives sight to the blind, and helps those who no one
+        sees as worth helping.\n\nHe scares the Jewish leaders, they see him as a
+        threat. So they arrange, through Judas the traitor and their Roman oppressors,
+        for the crucifixion of Jesus. They think the matter is settled. But the women
+        who serve Jesus discover an empty tomb. The disciples panic. When Jesus appears,
+        they doubt He''s real. But it''s what He proclaimed all along: He is their
+        perfect sacrifice, their Savior, victor over death. He ascends to heaven,
+        telling His followers to tell others about Him and His teachings.","studyQuestions":["How
+        is the sacrifice of Jesus part of God''s plan?","How do the different groups
+        of people respond to Jesus and His teachings?","What are some of the miracles
+        Jesus performed? How do they affect those people?","How do you respond to
+        the life of Jesus?"],"metadataLanguageTag":"en","_links":{"sampleMediaComponentLanguage":{"href":"http://api.arclight.org/v2/media-components/1_jf-0-0/languages/529?platform=ios&apiKey=1234567890"},"osisBibleBooks":{"href":"http://api.arclight.org/v2/taxonomies/osisBibleBooks?apiKey=1234567890"},"self":{"href":"http://api.arclight.org/v2/media-components/1_jf-0-0?apiKey=1234567890"},"mediaComponentLinks":{"href":"http://api.arclight.org/v2/media-component-links/1_jf-0-0?apiKey=1234567890"}}}'
+  recorded_at: Sun, 24 Jan 2021 21:56:49 GMT
+- request:
+    method: get
+    uri: http://api.arclight.org/v2/media-components/1_jf-0-0/languages/529?apiKey=1234567890&platform=android
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 24 Jan 2021 21:56:51 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1626'
+      Connection:
+      - keep-alive
+      Server:
+      - Apache/2.4.46 () PHP/7.4.11
+      X-Powered-By:
+      - PHP/7.4.11
+      Set-Cookie:
+      - PHPSESSID=e83itc94ncf0hsd320dd0v4efi; path=/; HttpOnly; SameSite=lax
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Etag:
+      - '"c10af4251efa0eef005495f27b96a464-gzip"'
+      Last-Modified:
+      - Sat, 23 Jan 2021 23:29:57 GMT
+      Expires:
+      - Sun, 24 Jan 2021 21:56:51 GMT
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"mediaComponentId":"1_jf-0-0","languageId":529,"refId":"1_529-jf-0-0","apiSessionId":"1234567890","platform":"android","lengthInMilliseconds":7673754,"subtitleUrls":{"srt":[{"languageId":22658,"languageTag":"ar","url":"https://d389zwyrhi20m0.cloudfront.net/22658/1_jf-0-0/0-0-OT-22658-32426.srt"},{"languageId":140126,"languageTag":"cjp","url":"https://d389zwyrhi20m0.cloudfront.net/140126/1_jf-0-0/0-0-OT-140126-33538.srt"},{"languageId":21754,"languageTag":"zh-hans","url":"https://d389zwyrhi20m0.cloudfront.net/21754/1_jf-0-0/0-0-OT-21754-31800.srt"},{"languageId":21753,"languageTag":"zh-hant","url":"https://d389zwyrhi20m0.cloudfront.net/21753/1_jf-0-0/0-0-OT-21753-31804.srt"},{"languageId":4432,"languageTag":"cs","url":"https://d389zwyrhi20m0.cloudfront.net/4432/1_jf-0-0/0-0-OT-4432-31870.srt"},{"languageId":1269,"languageTag":"nl","url":"https://d389zwyrhi20m0.cloudfront.net/1269/1_jf-0-0/0-0-OT-1269-32109.srt"},{"languageId":529,"languageTag":"en","url":"https://d389zwyrhi20m0.cloudfront.net/529/1_jf-0-0/0-0-OT-529-31474.srt"},{"languageId":4820,"languageTag":"fi","url":"https://d389zwyrhi20m0.cloudfront.net/4820/1_jf-0-0/0-0-OT-4820-31792.srt"},{"languageId":496,"languageTag":"fr","url":"https://d389zwyrhi20m0.cloudfront.net/496/1_jf-0-0/0-0-OT-496-31801.srt"},{"languageId":1106,"languageTag":"de","url":"https://d389zwyrhi20m0.cloudfront.net/1106/1_jf-0-0/0-0-OT-1106-31803.srt"},{"languageId":483,"languageTag":"el","url":"https://d389zwyrhi20m0.cloudfront.net/483/1_jf-0-0/0-0-OT-483-32114.srt"},{"languageId":184506,"languageTag":"hni","url":"https://d389zwyrhi20m0.cloudfront.net/184506/1_jf-0-0/0-0-OT-184506-33664.srt"},{"languageId":6464,"languageTag":"hi","url":"https://d389zwyrhi20m0.cloudfront.net/6464/1_jf-0-0/0-0-OT-6464-32428.srt"},{"languageId":4415,"languageTag":"it","url":"https://d389zwyrhi20m0.cloudfront.net/4415/1_jf-0-0/0-0-OT-4415-33476.srt"},{"languageId":7083,"languageTag":"ja","url":"https://d389zwyrhi20m0.cloudfront.net/7083/1_jf-0-0/0-0-OT-7083-31802.srt"},{"languageId":3804,"languageTag":"ko","url":"https://d389zwyrhi20m0.cloudfront.net/3804/1_jf-0-0/0-0-OT-3804-31473.srt"},{"languageId":3964,"languageTag":"onb","url":"https://d389zwyrhi20m0.cloudfront.net/3964/1_jf-0-0/0-0-OT-3964-33063.srt"},{"languageId":3974,"languageTag":"nxq","url":"https://d389zwyrhi20m0.cloudfront.net/3974/1_jf-0-0/0-0-OT-3974-33969.srt"},{"languageId":3934,"languageTag":"ru","url":"https://d389zwyrhi20m0.cloudfront.net/3934/1_jf-0-0/0-0-OT-3934-31789.srt"},{"languageId":1112,"languageTag":"sl","url":"https://d389zwyrhi20m0.cloudfront.net/1112/1_jf-0-0/0-0-OT-1112-34732.srt"},{"languageId":21028,"languageTag":"es","url":"https://d389zwyrhi20m0.cloudfront.net/21028/1_jf-0-0/0-0-OT-21028-31798.srt"},{"languageId":23178,"languageTag":"sw","url":"https://d389zwyrhi20m0.cloudfront.net/23178/1_jf-0-0/0-0-OT-23178-32120.srt"},{"languageId":4823,"languageTag":"sv","url":"https://d389zwyrhi20m0.cloudfront.net/4823/1_jf-0-0/0-0-OT-4823-32108.srt"},{"languageId":184497,"languageTag":"rif","url":"https://d389zwyrhi20m0.cloudfront.net/184497/1_jf-0-0/0-0-OT-184497-33441.srt"},{"languageId":184498,"languageTag":"rif","url":"https://d389zwyrhi20m0.cloudfront.net/184498/1_jf-0-0/0-0-OT-184498-33442.srt"},{"languageId":139089,"languageTag":"mjg","url":"https://d389zwyrhi20m0.cloudfront.net/139089/1_jf-0-0/0-0-OT-139089-33615.srt"},{"languageId":1942,"languageTag":"tr","url":"https://d389zwyrhi20m0.cloudfront.net/1942/1_jf-0-0/0-0-OT-1942-31662.srt"},{"languageId":3887,"languageTag":"vi","url":"https://d389zwyrhi20m0.cloudfront.net/3887/1_jf-0-0/0-0-OT-3887-34247.srt"},{"languageId":22500,"languageTag":"vi-x-Northern","url":"https://d389zwyrhi20m0.cloudfront.net/22500/1_jf-0-0/0-0-OT-22500-31643.srt"}],"vtt":[{"languageId":22658,"languageName":"Arabic,
+        Modern Standard","languageTag":"ar","url":"https://d389zwyrhi20m0.cloudfront.net/22658/1_jf-0-0/0-0-OT-22658-32426.vtt"},{"languageId":140126,"languageName":"Cabecar","languageTag":"cjp","url":"https://d389zwyrhi20m0.cloudfront.net/140126/1_jf-0-0/0-0-OT-140126-33538.vtt"},{"languageId":21754,"languageName":"Chinese,
+        Simplified","languageTag":"zh-hans","url":"https://d389zwyrhi20m0.cloudfront.net/21754/1_jf-0-0/0-0-OT-21754-31800.vtt"},{"languageId":21753,"languageName":"Chinese,
+        Traditional","languageTag":"zh-hant","url":"https://d389zwyrhi20m0.cloudfront.net/21753/1_jf-0-0/0-0-OT-21753-31804.vtt"},{"languageId":4432,"languageName":"Czech","languageTag":"cs","url":"https://d389zwyrhi20m0.cloudfront.net/4432/1_jf-0-0/0-0-OT-4432-31870.vtt"},{"languageId":1269,"languageName":"Dutch","languageTag":"nl","url":"https://d389zwyrhi20m0.cloudfront.net/1269/1_jf-0-0/0-0-OT-1269-32109.vtt"},{"languageId":529,"languageName":"English","languageTag":"en","url":"https://d389zwyrhi20m0.cloudfront.net/529/1_jf-0-0/0-0-OT-529-31474.vtt"},{"languageId":4820,"languageName":"Finnish","languageTag":"fi","url":"https://d389zwyrhi20m0.cloudfront.net/4820/1_jf-0-0/0-0-OT-4820-31792.vtt"},{"languageId":496,"languageName":"French","languageTag":"fr","url":"https://d389zwyrhi20m0.cloudfront.net/496/1_jf-0-0/0-0-OT-496-31801.vtt"},{"languageId":1106,"languageName":"German,
+        Standard","languageTag":"de","url":"https://d389zwyrhi20m0.cloudfront.net/1106/1_jf-0-0/0-0-OT-1106-31803.vtt"},{"languageId":483,"languageName":"Greek","languageTag":"el","url":"https://d389zwyrhi20m0.cloudfront.net/483/1_jf-0-0/0-0-OT-483-32114.vtt"},{"languageId":184506,"languageName":"Hani,
+        Haya","languageTag":"hni","url":"https://d389zwyrhi20m0.cloudfront.net/184506/1_jf-0-0/0-0-OT-184506-33664.vtt"},{"languageId":6464,"languageName":"Hindi","languageTag":"hi","url":"https://d389zwyrhi20m0.cloudfront.net/6464/1_jf-0-0/0-0-OT-6464-32428.vtt"},{"languageId":4415,"languageName":"Italian","languageTag":"it","url":"https://d389zwyrhi20m0.cloudfront.net/4415/1_jf-0-0/0-0-OT-4415-33476.vtt"},{"languageId":7083,"languageName":"Japanese","languageTag":"ja","url":"https://d389zwyrhi20m0.cloudfront.net/7083/1_jf-0-0/0-0-OT-7083-31802.vtt"},{"languageId":3804,"languageName":"Korean","languageTag":"ko","url":"https://d389zwyrhi20m0.cloudfront.net/3804/1_jf-0-0/0-0-OT-3804-31473.vtt"},{"languageId":3964,"languageName":"Lingao","languageTag":"onb","url":"https://d389zwyrhi20m0.cloudfront.net/3964/1_jf-0-0/0-0-OT-3964-33063.vtt"},{"languageId":3974,"languageName":"Naxi","languageTag":"nxq","url":"https://d389zwyrhi20m0.cloudfront.net/3974/1_jf-0-0/0-0-OT-3974-33969.vtt"},{"languageId":3934,"languageName":"Russian","languageTag":"ru","url":"https://d389zwyrhi20m0.cloudfront.net/3934/1_jf-0-0/0-0-OT-3934-31789.vtt"},{"languageId":1112,"languageName":"Slovenian","languageTag":"sl","url":"https://d389zwyrhi20m0.cloudfront.net/1112/1_jf-0-0/0-0-OT-1112-34732.vtt"},{"languageId":21028,"languageName":"Spanish,
+        Latin American","languageTag":"es","url":"https://d389zwyrhi20m0.cloudfront.net/21028/1_jf-0-0/0-0-OT-21028-31798.vtt"},{"languageId":23178,"languageName":"Swahili:
+        Tanzania","languageTag":"sw","url":"https://d389zwyrhi20m0.cloudfront.net/23178/1_jf-0-0/0-0-OT-23178-32120.vtt"},{"languageId":4823,"languageName":"Swedish","languageTag":"sv","url":"https://d389zwyrhi20m0.cloudfront.net/4823/1_jf-0-0/0-0-OT-4823-32108.vtt"},{"languageId":184497,"languageName":"Tarifit
+        (Arabic Based Script)","languageTag":"rif","url":"https://d389zwyrhi20m0.cloudfront.net/184497/1_jf-0-0/0-0-OT-184497-33441.vtt"},{"languageId":184498,"languageName":"Tarifit
+        (Latin Based Script)","languageTag":"rif","url":"https://d389zwyrhi20m0.cloudfront.net/184498/1_jf-0-0/0-0-OT-184498-33442.vtt"},{"languageId":139089,"languageName":"Tu,
+        Huzhu","languageTag":"mjg","url":"https://d389zwyrhi20m0.cloudfront.net/139089/1_jf-0-0/0-0-OT-139089-33615.vtt"},{"languageId":1942,"languageName":"Turkish","languageTag":"tr","url":"https://d389zwyrhi20m0.cloudfront.net/1942/1_jf-0-0/0-0-OT-1942-31662.vtt"},{"languageId":3887,"languageName":"Vietnamese","languageTag":"vi","url":"https://d389zwyrhi20m0.cloudfront.net/3887/1_jf-0-0/0-0-OT-3887-34247.vtt"},{"languageId":22500,"languageName":"Vietnamese,
+        Northern","languageTag":"vi-x-Northern","url":"https://d389zwyrhi20m0.cloudfront.net/22500/1_jf-0-0/0-0-OT-22500-31643.vtt"}]},"downloadUrls":{},"streamingUrls":{"hls":[{"videoBitrate":0,"videoContainer":"M2TS","url":"http://arc.gt/j67rz?apiSessionId=1234567890"}],"http":[{"videoBitrate":212000,"videoContainer":"MP4","url":"http://arc.gt/s0pen?apiSessionId=1234567890"},{"videoBitrate":363000,"videoContainer":"MP4","url":"http://arc.gt/0qnmc?apiSessionId=1234567890"},{"videoBitrate":575000,"videoContainer":"MP4","url":"http://arc.gt/1e62h?apiSessionId=1234567890"},{"videoBitrate":896000,"videoContainer":"MP4","url":"http://arc.gt/1o7n7?apiSessionId=1234567890"},{"videoBitrate":1627000,"videoContainer":"MP4","url":"http://arc.gt/2r4bc?apiSessionId=1234567890"},{"videoBitrate":2459000,"videoContainer":"MP4","url":"http://arc.gt/fb1vf?apiSessionId=1234567890"}]},"shareUrl":"http://arc.gt/4pan4?apiSessionId=1234567890","socialMediaUrls":{},"openGraphVideoPlayer":"https://jesusfilm.org/","_links":{"self":{"href":"http://api.arclight.org/v2/media-components/1_jf-0-0/languages/529?platform=android&apiKey=1234567890"},"mediaComponent":{"href":"http://api.arclight.org/v2/media-components/1_jf-0-0?apiKey=1234567890"},"mediaLanguage":{"href":"http://api.arclight.org/v2/media-languages/529?apiKey=1234567890"}}}'
+  recorded_at: Sun, 24 Jan 2021 21:56:51 GMT
+- request:
+    method: get
+    uri: http://api.arclight.org/v2/media-components/1_jf-0-0?apiKey=1234567890
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Language:
+      - en-US
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Sun, 24 Jan 2021 22:12:28 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '66'
+      Connection:
+      - keep-alive
+      Server:
+      - Apache/2.4.46 () PHP/7.4.11
+      X-Powered-By:
+      - PHP/7.4.11
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Expires:
+      - Sun, 24 Jan 2021 22:12:28 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"message":"Forbidden - invalid apiKey [1234567890]","logref":401}'
+  recorded_at: Sun, 24 Jan 2021 22:12:28 GMT
+- request:
+    method: get
+    uri: http://api.arclight.org/v2/media-components/1_jf-0-0?apiKey=1234567890
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Language:
+      - en-US
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Sun, 24 Jan 2021 22:14:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '66'
+      Connection:
+      - keep-alive
+      Server:
+      - Apache/2.4.46 () PHP/7.4.11
+      X-Powered-By:
+      - PHP/7.4.11
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Expires:
+      - Sun, 24 Jan 2021 22:14:15 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"message":"Forbidden - invalid apiKey [1234567890]","logref":401}'
+  recorded_at: Sun, 24 Jan 2021 22:14:15 GMT
+- request:
+    method: get
+    uri: http://api.arclight.org/v2/media-components/1_jf-0-0?apiKey=1234567890
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Language:
+      - en-US
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Sun, 24 Jan 2021 22:14:23 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '66'
+      Connection:
+      - keep-alive
+      Server:
+      - Apache/2.4.46 () PHP/7.4.11
+      X-Powered-By:
+      - PHP/7.4.11
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Expires:
+      - Sun, 24 Jan 2021 22:14:23 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"message":"Forbidden - invalid apiKey [1234567890]","logref":401}'
+  recorded_at: Sun, 24 Jan 2021 22:14:23 GMT
+- request:
+    method: get
+    uri: http://api.arclight.org/v2/media-components/1_jf-0-0?apiKey=1234567890
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Language:
+      - en-US
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Sun, 24 Jan 2021 22:14:29 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '66'
+      Connection:
+      - keep-alive
+      Server:
+      - Apache/2.4.46 () PHP/7.4.11
+      X-Powered-By:
+      - PHP/7.4.11
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Expires:
+      - Sun, 24 Jan 2021 22:14:29 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"message":"Forbidden - invalid apiKey [1234567890]","logref":401}'
+  recorded_at: Sun, 24 Jan 2021 22:14:29 GMT
+recorded_with: VCR 6.0.0

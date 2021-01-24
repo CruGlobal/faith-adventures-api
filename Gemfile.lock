@@ -104,6 +104,8 @@ GEM
       jwt (~> 2.1, >= 2.1.0)
       redis (~> 4.0, >= 4.0.1)
       redis-namespace (~> 1.6, >= 1.6.0)
+    friendly_id (5.4.2)
+      activerecord (>= 4.0.0)
     fugit (1.4.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -275,6 +277,7 @@ GEM
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
     unicode-display_width (2.0.0)
+    vcr (6.0.0)
     webmock (3.10.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -298,6 +301,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   firebase_id_token
+  friendly_id (~> 5.4.0)
   graphql
   graphql-batch
   hiredis
@@ -324,6 +328,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-watcher-listen
+  vcr
   webmock
 
 RUBY VERSION

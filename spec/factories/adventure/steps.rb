@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :adventure_step, class: 'Adventure::Step' do
     adventure
-    association :content, factory: :content_arclight
+    association :content, factory: %i[content_arclight complete]
   end
 end

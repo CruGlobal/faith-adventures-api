@@ -9,6 +9,7 @@ gem 'acts_as_list'
 gem 'acts-as-taggable-on', '~> 7.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'firebase_id_token'
+gem 'friendly_id', '~> 5.4.0'
 gem 'graphql'
 gem 'graphql-batch'
 gem 'hiredis'
@@ -28,6 +29,7 @@ group :test do
   gem 'rspec-retry'
   gem 'rspec-sidekiq'
   gem 'shoulda-matchers'
+  gem 'vcr'
   gem 'webmock'
 end
 

@@ -12,5 +12,8 @@ class User < ApplicationRecord
     user.save
 
     user
+  rescue FirebaseIdToken::Exceptions::NoCertificatesError
+    FirebaseIdToken::Certificates.request
+    retry
   end
 end

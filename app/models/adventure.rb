@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Adventure < ApplicationRecord
+  extend FriendlyId
+  friendly_id :name, use: :slugged
   acts_as_taggable_on :tags
   belongs_to :content
   belongs_to :template, class_name: 'Adventure', optional: true

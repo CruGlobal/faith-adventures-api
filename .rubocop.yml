@@ -18,3 +18,9 @@ Style/ClassAndModuleChildren:
   EnforcedStyle: compact
 RSpec/NestedGroups:
   Max: 5
+Metrics/AbcSize:
+  Exclude:
+    - "db/migrate/*"
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - "db/migrate/*"

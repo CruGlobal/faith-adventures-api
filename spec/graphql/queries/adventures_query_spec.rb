@@ -8,47 +8,48 @@ RSpec.describe Queries::AdventuresQuery, type: :query do
     {
       'adventures' => {
         'nodes' => [{
-          'id' => adventure.id,
-          'name' => adventure.name,
-          'locale' => adventure.locale.underscore.upcase,
-          'description' => adventure.description,
-          'content' => {
-            'id' => adventure.content.id,
-            'name' => adventure.content.name,
-            'description' => adventure.content.description,
-            'locale' => adventure.content.locale.underscore.upcase,
-            'mediaComponentId' => adventure.content.media_component_id,
-            'mediaLanguageId' => adventure.content.media_language_id
-          }
+          'id' => adventure.id
         }]
       }
     }
   end
 
-  it 'return user' do
+  it 'return adventure' do
     resolve(query)
     expect(response_data).to eq(data), invalid_response_data
   end
 
+  context 'when adventure featured is nil' do
+    it 'returns adventure' do
+      resolve(query, variables: { featured: false })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
+  context 'when adventure unfeatured' do
+    before { adventure.update(featured: false) }
+
+    it 'returns adventure' do
+      resolve(query, variables: { featured: false })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
+  context 'when adventure is featured' do
+    before { adventure.update(featured: true) }
+
+    it 'returns adventure' do
+      resolve(query, variables: { featured: true })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
   def query
     <<~GQL
-      query {
-        adventures {
+      query($featured: Boolean) {
+        adventures(featured: $featured) {
           nodes {
             id
-            name
-            locale
-            description
-            content {
-              id
-              name
-              description
-              locale
-              ... on Arclight {
-                mediaComponentId
-                mediaLanguageId
-              }
-            }
           }
         }
       }
