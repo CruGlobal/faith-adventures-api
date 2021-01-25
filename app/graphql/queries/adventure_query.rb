@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Queries::AdventureQuery < Queries::ApplicationQuery
-  description 'Find adventure by slug'
+  description 'Find adventure by ID or slug'
   type Types::AdventureType, null: false
-  argument :slug, String, required: true
+  argument :id, ID, required: true, description: 'Can be ID or slug'
 
-  def resolve(slug:)
-    Adventure.friendly.find(slug)
+  def resolve(id:)
+    Adventure.friendly.find(id)
   end
 end

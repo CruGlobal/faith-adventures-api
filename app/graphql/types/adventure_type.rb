@@ -7,6 +7,7 @@ class Types::AdventureType < Types::BaseRecord
   field :description, type: String, null: true
   field :locale, type: Types::LocaleEnum, null: false
   field :content, type: Types::ContentInterface, null: false
+  field :steps, type: Types::Adventure::StepType.connection_type, null: false
 
   def tag_list
     object.tag_list.sort

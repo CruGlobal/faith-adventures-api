@@ -83,6 +83,8 @@ GEM
       activerecord
       database_cleaner (~> 1.8.0)
     debug_inspector (0.0.3)
+    deep_cloneable (3.0.0)
+      activerecord (>= 3.1.0, < 7)
     diff-lcs (1.4.4)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
@@ -297,6 +299,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap (>= 1.4.2)
   database_cleaner-active_record
+  deep_cloneable (~> 3.0.0)
   dotenv-rails
   factory_bot_rails
   faker

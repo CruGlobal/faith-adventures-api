@@ -8,6 +8,7 @@ ruby '2.7.2'
 gem 'acts_as_list'
 gem 'acts-as-taggable-on', '~> 7.0'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'deep_cloneable', '~> 3.0.0'
 gem 'firebase_id_token'
 gem 'friendly_id', '~> 5.4.0'
 gem 'graphql'

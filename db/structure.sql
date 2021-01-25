@@ -26,6 +26,38 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 SET default_tablespace = '';
 
 --
+-- Name: adventure_memberships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.adventure_memberships (
+    id bigint NOT NULL,
+    user_id uuid NOT NULL,
+    adventure_id uuid NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: adventure_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.adventure_memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: adventure_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.adventure_memberships_id_seq OWNED BY public.adventure_memberships.id;
+
+
+--
 -- Name: adventure_steps; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -35,7 +67,9 @@ CREATE TABLE public.adventure_steps (
     content_id uuid NOT NULL,
     "position" integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    name character varying NOT NULL,
+    slug character varying
 );
 
 
@@ -178,10 +212,25 @@ CREATE TABLE public.users (
 
 
 --
+-- Name: adventure_memberships id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_memberships ALTER COLUMN id SET DEFAULT nextval('public.adventure_memberships_id_seq'::regclass);
+
+
+--
 -- Name: friendly_id_slugs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('public.friendly_id_slugs_id_seq'::regclass);
+
+
+--
+-- Name: adventure_memberships adventure_memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_memberships
+    ADD CONSTRAINT adventure_memberships_pkey PRIMARY KEY (id);
 
 
 --
@@ -257,6 +306,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_adventure_memberships_on_adventure_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adventure_memberships_on_adventure_id ON public.adventure_memberships USING btree (adventure_id);
+
+
+--
+-- Name: index_adventure_memberships_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adventure_memberships_on_user_id ON public.adventure_memberships USING btree (user_id);
+
+
+--
+-- Name: index_adventure_memberships_on_user_id_and_adventure_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_adventure_memberships_on_user_id_and_adventure_id ON public.adventure_memberships USING btree (user_id, adventure_id);
+
+
+--
 -- Name: index_adventure_steps_on_adventure_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -268,6 +338,13 @@ CREATE INDEX index_adventure_steps_on_adventure_id ON public.adventure_steps USI
 --
 
 CREATE INDEX index_adventure_steps_on_content_id ON public.adventure_steps USING btree (content_id);
+
+
+--
+-- Name: index_adventure_steps_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_adventure_steps_on_slug ON public.adventure_steps USING btree (slug);
 
 
 --
@@ -419,6 +496,14 @@ ALTER TABLE ONLY public.adventure_steps
 
 
 --
+-- Name: adventure_memberships fk_rails_7f7159f7ef; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_memberships
+    ADD CONSTRAINT fk_rails_7f7159f7ef FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: taggings fk_rails_9fcd2e236b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -432,6 +517,14 @@ ALTER TABLE ONLY public.taggings
 
 ALTER TABLE ONLY public.adventures
     ADD CONSTRAINT fk_rails_b61b712b3a FOREIGN KEY (template_id) REFERENCES public.adventures(id) ON DELETE CASCADE;
+
+
+--
+-- Name: adventure_memberships fk_rails_c2691b9523; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_memberships
+    ADD CONSTRAINT fk_rails_c2691b9523 FOREIGN KEY (adventure_id) REFERENCES public.adventures(id) ON DELETE CASCADE;
 
 
 --
@@ -469,6 +562,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210113031058'),
 ('20210122025325'),
 ('20210122025333'),
-('20210122030140');
+('20210122030140'),
+('20210124225522'),
+('20210125020142');
 
 
