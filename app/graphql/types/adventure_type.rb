@@ -8,8 +8,14 @@ class Types::AdventureType < Types::BaseRecord
   field :locale, type: Types::LocaleEnum, null: false
   field :content, type: Types::ContentInterface, null: false
   field :steps, type: Types::Adventure::StepType.connection_type, null: false
+  field :solo_adventure, type: Types::AdventureType, null: true
+  field :template, type: Types::AdventureType, null: true
 
   def tag_list
     object.tag_list.sort
+  end
+
+  def solo_adventure
+    context[:current_user] ? object.solo_adventure(context[:current_user]) : nil
   end
 end

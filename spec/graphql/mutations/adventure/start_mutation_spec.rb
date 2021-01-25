@@ -7,7 +7,6 @@ RSpec.describe Mutations::Adventure::StartMutation, type: :query do
   let(:adventure) { create(:adventure, :complete, published: true) }
   let!(:step) { create(:adventure_step, adventure: adventure) }
   let(:my_adventure) { Adventure.joins(:users).find_by(users: { id: user.id }, template: adventure) }
-  let(:my_step) { my_adventure.steps.first }
   let(:data) do
     {
       'adventureStart' => {
@@ -30,9 +29,9 @@ RSpec.describe Mutations::Adventure::StartMutation, type: :query do
           'steps' => {
             'totalCount' => adventure.steps.count,
             'nodes' => [{
-              'id' => my_step.id,
+              'id' => my_adventure.steps.first.id,
               'name' => step.name,
-              'slug' => my_step.slug,
+              'slug' => my_adventure.steps.first.slug,
               'content' => {
                 'id' => step.content.id,
                 'name' => step.content.name,

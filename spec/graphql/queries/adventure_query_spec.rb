@@ -37,7 +37,8 @@ RSpec.describe Queries::AdventureQuery, type: :query do
               'mediaLanguageId' => step.content.media_language_id
             }
           }]
-        }
+        },
+        'soloAdventure' => nil
       }
     }
   end
@@ -54,10 +55,44 @@ RSpec.describe Queries::AdventureQuery, type: :query do
     end
   end
 
+  context 'when adventure not published' do
+    let!(:adventure) { create(:adventure, :complete, published: false) }
+
+    it 'returns error' do
+      resolve(query, variables: { id: adventure.slug })
+      expect(response_errors[0]['extensions']['code']).to eq('NOT_FOUND'), invalid_response_data
+    end
+  end
+
+  context 'when adventure is clone' do
+    let(:user) { create(:user) }
+    let!(:adventure) { create(:adventure, :complete, published: true).start(user) }
+
+    it 'returns error when not scoped to user' do
+      resolve(query, variables: { id: adventure.slug }, context: { current_user: user })
+      expect(response_errors[0]['extensions']['code']).to eq('NOT_FOUND'), invalid_response_data
+    end
+
+    it 'returns adventure when scoped to user' do
+      resolve(query, variables: { id: adventure.slug, scope_to_user: true }, context: { current_user: user })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
+  context 'when solo adventure exists' do
+    let(:user) { create(:user) }
+    let!(:clone) { adventure.start(user) }
+
+    it 'returns solo_adventure id' do
+      resolve(query, variables: { id: adventure.slug }, context: { current_user: user })
+      expect(response_data['adventure']['soloAdventure']['id']).to eq(clone.id), invalid_response_data
+    end
+  end
+
   def query
     <<~GQL
-      query($id: ID!) {
-        adventure(id: $id) {
+      query($id: ID!, $scope_to_user: Boolean) {
+        adventure(id: $id, scopeToUser: $scope_to_user) {
           id
           name
           locale
@@ -91,6 +126,9 @@ RSpec.describe Queries::AdventureQuery, type: :query do
                 }
               }
             }
+          }
+          soloAdventure {
+            id
           }
         }
       }

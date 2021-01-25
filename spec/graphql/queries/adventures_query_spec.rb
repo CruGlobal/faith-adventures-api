@@ -44,10 +44,20 @@ RSpec.describe Queries::AdventuresQuery, type: :query do
     end
   end
 
+  context 'when adventure is clone' do
+    let(:user) { create(:user) }
+    let(:adventure) { create(:adventure, :complete, published: true).start(user) }
+
+    it 'returns adventure' do
+      resolve(query, variables: { scope_to_user: true }, context: { current_user: user })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
   def query
     <<~GQL
-      query($featured: Boolean) {
-        adventures(featured: $featured) {
+      query($featured: Boolean, $scope_to_user: Boolean) {
+        adventures(featured: $featured, scopeToUser: $scope_to_user) {
           nodes {
             id
           }

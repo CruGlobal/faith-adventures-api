@@ -40,4 +40,68 @@ RSpec.describe Adventure, type: :model do
       expect(described_class.featured).to eq [adventure]
     end
   end
+
+  describe '#start' do
+    subject(:adventure) { create(:adventure, :complete, published: true, featured: true) }
+
+    let(:user) { create(:user) }
+    let(:clone) { adventure.start(user) }
+
+    before { create(:adventure_step, adventure: adventure) }
+
+    it 'copies attributes to clone' do
+      expect(clone.attributes).to include(
+        adventure.attributes.except('id', 'slug', 'created_at', 'updated_at', 'template_id', 'featured', 'published')
+      )
+    end
+
+    it 'sets attributes on clone' do
+      expect(clone.attributes).to include(
+        'template_id' => adventure.id,
+        'published' => nil,
+        'featured' => nil
+      )
+    end
+
+    it 'sets user' do
+      expect(clone.users).to eq [user]
+    end
+
+    it 'copies step association attributes' do
+      expect(clone.steps.first.attributes).to include(
+        adventure.steps.first.attributes.except('id', 'slug', 'created_at', 'updated_at', 'adventure_id')
+      )
+    end
+
+    context 'when child' do
+      subject(:adventure) { create(:adventure, template: create(:adventure)) }
+
+      it 'returns self' do
+        expect(clone).to eq adventure
+      end
+    end
+
+    context 'when template has already been copied by user' do
+      let!(:existing_clone) { adventure.start(user) }
+
+      it 'returns existing clone' do
+        expect(clone).to eq existing_clone
+      end
+    end
+  end
+
+  describe '#solo_adventure' do
+    let(:clone) { adventure.start(user) }
+    let(:user) { create(:user) }
+
+    before do
+      group_adventure = adventure.start(user)
+      group_adventure.users << create(:user)
+      clone
+    end
+
+    it 'returns solo_adventure' do
+      expect(adventure.solo_adventure(user)).to eq clone
+    end
+  end
 end
