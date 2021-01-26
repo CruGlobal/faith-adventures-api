@@ -38,7 +38,9 @@ RSpec.describe Queries::AdventureQuery, type: :query do
             }
           }]
         },
-        'soloAdventure' => nil
+        'children' => {
+          'nodes' => []
+        }
       }
     }
   end
@@ -68,13 +70,13 @@ RSpec.describe Queries::AdventureQuery, type: :query do
     let(:user) { create(:user) }
     let!(:adventure) { create(:adventure, :complete, published: true).start(user) }
 
-    it 'returns error when not scoped to user' do
-      resolve(query, variables: { id: adventure.slug }, context: { current_user: user })
+    it 'returns error when no user' do
+      resolve(query, variables: { id: adventure.slug })
       expect(response_errors[0]['extensions']['code']).to eq('NOT_FOUND'), invalid_response_data
     end
 
-    it 'returns adventure when scoped to user' do
-      resolve(query, variables: { id: adventure.slug, scope_to_user: true }, context: { current_user: user })
+    it 'returns adventure when user' do
+      resolve(query, variables: { id: adventure.slug }, context: { current_user: user })
       expect(response_data).to eq(data), invalid_response_data
     end
   end
@@ -85,14 +87,14 @@ RSpec.describe Queries::AdventureQuery, type: :query do
 
     it 'returns solo_adventure id' do
       resolve(query, variables: { id: adventure.slug }, context: { current_user: user })
-      expect(response_data['adventure']['soloAdventure']['id']).to eq(clone.id), invalid_response_data
+      expect(response_data['adventure']['children']['nodes'][0]['id']).to eq(clone.id), invalid_response_data
     end
   end
 
   def query
     <<~GQL
-      query($id: ID!, $scope_to_user: Boolean) {
-        adventure(id: $id, scopeToUser: $scope_to_user) {
+      query($id: ID!) {
+        adventure(id: $id) {
           id
           name
           locale
@@ -127,8 +129,10 @@ RSpec.describe Queries::AdventureQuery, type: :query do
               }
             }
           }
-          soloAdventure {
-            id
+          children {
+            nodes {
+              id
+            }
           }
         }
       }

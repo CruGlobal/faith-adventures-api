@@ -30,7 +30,7 @@ SET default_tablespace = '';
 --
 
 CREATE TABLE public.adventure_memberships (
-    id bigint NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     user_id uuid NOT NULL,
     adventure_id uuid NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -39,22 +39,34 @@ CREATE TABLE public.adventure_memberships (
 
 
 --
--- Name: adventure_memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: adventure_step_form_field_responses; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.adventure_memberships_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE TABLE public.adventure_step_form_field_responses (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    form_field_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    value text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
 
 
 --
--- Name: adventure_memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: adventure_step_form_fields; Type: TABLE; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.adventure_memberships_id_seq OWNED BY public.adventure_memberships.id;
+CREATE TABLE public.adventure_step_form_fields (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    step_id uuid NOT NULL,
+    type character varying NOT NULL,
+    name character varying NOT NULL,
+    min character varying,
+    max character varying,
+    required boolean DEFAULT false NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
 
 
 --
@@ -212,13 +224,6 @@ CREATE TABLE public.users (
 
 
 --
--- Name: adventure_memberships id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.adventure_memberships ALTER COLUMN id SET DEFAULT nextval('public.adventure_memberships_id_seq'::regclass);
-
-
---
 -- Name: friendly_id_slugs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -231,6 +236,22 @@ ALTER TABLE ONLY public.friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('p
 
 ALTER TABLE ONLY public.adventure_memberships
     ADD CONSTRAINT adventure_memberships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: adventure_step_form_field_responses adventure_step_form_field_responses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_step_form_field_responses
+    ADD CONSTRAINT adventure_step_form_field_responses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: adventure_step_form_fields adventure_step_form_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_step_form_fields
+    ADD CONSTRAINT adventure_step_form_fields_pkey PRIMARY KEY (id);
 
 
 --
@@ -306,6 +327,13 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: idx_responses_on_user_and_form_field; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_responses_on_user_and_form_field ON public.adventure_step_form_field_responses USING btree (user_id, form_field_id);
+
+
+--
 -- Name: index_adventure_memberships_on_adventure_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -324,6 +352,27 @@ CREATE INDEX index_adventure_memberships_on_user_id ON public.adventure_membersh
 --
 
 CREATE UNIQUE INDEX index_adventure_memberships_on_user_id_and_adventure_id ON public.adventure_memberships USING btree (user_id, adventure_id);
+
+
+--
+-- Name: index_adventure_step_form_field_responses_on_form_field_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adventure_step_form_field_responses_on_form_field_id ON public.adventure_step_form_field_responses USING btree (form_field_id);
+
+
+--
+-- Name: index_adventure_step_form_field_responses_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adventure_step_form_field_responses_on_user_id ON public.adventure_step_form_field_responses USING btree (user_id);
+
+
+--
+-- Name: index_adventure_step_form_fields_on_step_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adventure_step_form_fields_on_step_id ON public.adventure_step_form_fields USING btree (step_id);
 
 
 --
@@ -496,11 +545,35 @@ ALTER TABLE ONLY public.adventure_steps
 
 
 --
+-- Name: adventure_step_form_field_responses fk_rails_06ac960ac1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_step_form_field_responses
+    ADD CONSTRAINT fk_rails_06ac960ac1 FOREIGN KEY (form_field_id) REFERENCES public.adventure_step_form_fields(id) ON DELETE CASCADE;
+
+
+--
+-- Name: adventure_step_form_field_responses fk_rails_40bcc69806; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_step_form_field_responses
+    ADD CONSTRAINT fk_rails_40bcc69806 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: adventure_memberships fk_rails_7f7159f7ef; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.adventure_memberships
     ADD CONSTRAINT fk_rails_7f7159f7ef FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: adventure_step_form_fields fk_rails_891348f31b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adventure_step_form_fields
+    ADD CONSTRAINT fk_rails_891348f31b FOREIGN KEY (step_id) REFERENCES public.adventure_steps(id) ON DELETE CASCADE;
 
 
 --
@@ -564,6 +637,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210122025333'),
 ('20210122030140'),
 ('20210124225522'),
-('20210125020142');
+('20210125020142'),
+('20210126034234'),
+('20210126034537');
 
 

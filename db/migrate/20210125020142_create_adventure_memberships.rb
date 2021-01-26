@@ -2,7 +2,7 @@
 
 class CreateAdventureMemberships < ActiveRecord::Migration[6.0]
   def change
-    create_table :adventure_memberships do |t|
+    create_table :adventure_memberships, id: :uuid do |t|
       t.belongs_to :user, null: false, foreign_key: { on_delete: :cascade }, type: :uuid
       t.belongs_to :adventure, null: false, foreign_key: { on_delete: :cascade }, type: :uuid
 
