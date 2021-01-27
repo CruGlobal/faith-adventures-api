@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Adventure::Step::FormField::IntegerField, type: :model do
-  subject(:form_field) { create(:adventure_step_form_field_integer_field) }
+RSpec.describe Adventure::Step::FormField::NumberField, type: :model do
+  subject(:form_field) { create(:adventure_step_form_field_number_field) }
 
   it { is_expected.to allow_values('0', '-1', '+1', '1').for(:min) }
   it { is_expected.not_to allow_values('abc', 'def1', '1ghi').for(:min).with_message('must be a valid number') }
@@ -39,7 +39,7 @@ RSpec.describe Adventure::Step::FormField::IntegerField, type: :model do
     end
 
     context 'when integer is less than min' do
-      subject(:form_field) { create(:adventure_step_form_field_integer_field, min: '20') }
+      subject(:form_field) { create(:adventure_step_form_field_number_field, min: '20') }
 
       let(:value) { '10' }
 
@@ -50,7 +50,7 @@ RSpec.describe Adventure::Step::FormField::IntegerField, type: :model do
     end
 
     context 'when integer is greater than than max' do
-      subject(:form_field) { create(:adventure_step_form_field_integer_field, max: '10') }
+      subject(:form_field) { create(:adventure_step_form_field_number_field, max: '10') }
 
       let(:value) { '20' }
 

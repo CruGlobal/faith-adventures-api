@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class Adventure::Step::FormField::IntegerField < Adventure::Step::FormField
+class Adventure::Step::FormField::NumberField < Adventure::Step::FormField
   INTEGER_REGEX = /\A[+-]?\d+\Z/.freeze
+  store_accessor :metadata, :max, :min
   validates :min, format: { with: INTEGER_REGEX, message: 'must be a valid number', allow_blank: true }
   validates :max, format: { with: INTEGER_REGEX, message: 'must be a valid number', allow_blank: true }
 

@@ -47,7 +47,10 @@ RSpec.describe Adventure, type: :model do
     let(:user) { create(:user) }
     let(:clone) { adventure.start(user) }
 
-    before { create(:adventure_step, adventure: adventure) }
+    before do
+      step = create(:adventure_step, adventure: adventure)
+      create(:adventure_step_form_field_date_field, :complete, step: step)
+    end
 
     it 'copies attributes to clone' do
       expect(clone.attributes).to include(
@@ -70,6 +73,14 @@ RSpec.describe Adventure, type: :model do
     it 'copies step association attributes' do
       expect(clone.steps.first.attributes).to include(
         adventure.steps.first.attributes.except('id', 'slug', 'created_at', 'updated_at', 'adventure_id')
+      )
+    end
+
+    it 'copies form_field association attributes' do
+      expect(clone.steps.first.form_fields.first.attributes).to include(
+        adventure.steps.first.form_fields.first.attributes.except(
+          'id', 'created_at', 'updated_at', 'step_id'
+        )
       )
     end
 

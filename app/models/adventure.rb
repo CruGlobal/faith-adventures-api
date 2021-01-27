@@ -9,7 +9,7 @@ class Adventure < ApplicationRecord
   has_many :children, class_name: 'Adventure', foreign_key: :template_id, dependent: :delete_all
   has_many :memberships, dependent: :delete_all
   has_many :users, through: :memberships
-  has_many :steps, dependent: :delete_all
+  has_many :steps, dependent: :delete_all, class_name: 'Adventure::Step'
   validates :name, :locale, presence: true
   validates :locale, inclusion: { in: I18n.available_locales.map(&:to_s) }
   scope :published, -> { where(published: true, template_id: nil) }
@@ -31,7 +31,7 @@ class Adventure < ApplicationRecord
   protected
 
   def clone_for_user(user)
-    adventure = deep_clone(include: :steps, except: %i[published featured]) do |original, copy|
+    adventure = deep_clone(include: { steps: :form_fields }, except: %i[published featured]) do |original, copy|
       copy.template_id = original.id if copy.respond_to?(:template_id)
       copy.tag_list = original.tag_list if copy.respond_to?(:tag_list)
     end

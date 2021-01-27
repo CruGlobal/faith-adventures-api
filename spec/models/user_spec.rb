@@ -9,6 +9,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:sub) }
   it { is_expected.to have_many(:memberships).dependent(:delete_all) }
   it { is_expected.to have_many(:adventures).through(:memberships) }
+  it { is_expected.to have_many(:steps).through(:adventures) }
 
   describe '.from_token' do
     let(:attributes) do

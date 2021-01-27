@@ -33,37 +33,37 @@ RSpec.describe Adventure::Step::FormField::DateField, type: :model do
     end
 
     context 'when date is less than min' do
-      subject(:form_field) { create(:adventure_step_form_field_date_field, min: '2011-10-01') }
+      subject(:form_field) { create(:adventure_step_form_field_date_field, min_date: '2011-10-01') }
 
       let(:value) { '1985-10-01' }
 
       it 'is invalid' do
         form_field.add_validation_errors(response)
-        expect(response.errors[:value].first).to eq "can't be before 2011-10-01"
+        expect(response.errors[:value].first).to eq "can't be before min_date"
       end
     end
 
     context 'when date is greater than than max' do
-      subject(:form_field) { create(:adventure_step_form_field_date_field, max: '1985-10-01') }
+      subject(:form_field) { create(:adventure_step_form_field_date_field, max_date: '1985-10-01') }
 
       let(:value) { '2011-10-01' }
 
       it 'is invalid' do
         form_field.add_validation_errors(response)
-        expect(response.errors[:value].first).to eq "can't be after 1985-10-01"
+        expect(response.errors[:value].first).to eq "can't be after max_date"
       end
     end
   end
 
   describe '#validate_min_valid_value' do
-    subject(:form_field) { build(:adventure_step_form_field_date_field, min: nil) }
+    subject(:form_field) { build(:adventure_step_form_field_date_field, min_date: nil) }
 
     it 'is valid' do
       expect(form_field).to be_valid
     end
 
     context 'when date format is valid' do
-      subject(:form_field) { build(:adventure_step_form_field_date_field, min: '1985-10-01') }
+      subject(:form_field) { build(:adventure_step_form_field_date_field, min_date: '1985-10-01') }
 
       it 'is valid' do
         expect(form_field).to be_valid
@@ -71,7 +71,7 @@ RSpec.describe Adventure::Step::FormField::DateField, type: :model do
     end
 
     context 'when date format is invalid' do
-      subject(:form_field) { build(:adventure_step_form_field_date_field, min: 'incorrect date format') }
+      subject(:form_field) { build(:adventure_step_form_field_date_field, min_date: 'incorrect date format') }
 
       it 'is invalid' do
         expect(form_field).not_to be_valid
@@ -80,14 +80,14 @@ RSpec.describe Adventure::Step::FormField::DateField, type: :model do
   end
 
   describe '#validate_max_valid_value' do
-    subject(:form_field) { build(:adventure_step_form_field_date_field, max: nil) }
+    subject(:form_field) { build(:adventure_step_form_field_date_field, max_date: nil) }
 
     it 'is valid' do
       expect(form_field).to be_valid
     end
 
     context 'when date format is valid' do
-      subject(:form_field) { build(:adventure_step_form_field_date_field, max: '1985-10-01') }
+      subject(:form_field) { build(:adventure_step_form_field_date_field, max_date: '1985-10-01') }
 
       it 'is valid' do
         expect(form_field).to be_valid
@@ -95,7 +95,7 @@ RSpec.describe Adventure::Step::FormField::DateField, type: :model do
     end
 
     context 'when date format is invalid' do
-      subject(:form_field) { build(:adventure_step_form_field_date_field, max: 'incorrect date format') }
+      subject(:form_field) { build(:adventure_step_form_field_date_field, max_date: 'incorrect date format') }
 
       it 'is invalid' do
         expect(form_field).not_to be_valid

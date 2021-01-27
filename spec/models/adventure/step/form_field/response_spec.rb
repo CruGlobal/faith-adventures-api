@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Adventure::Step::FormField::Response, type: :model do
   subject(:response) { build(:adventure_step_form_field_response, form_field: form_field) }
 
-  let(:form_field) { create(:adventure_step_form_field_text_field) }
+  let(:form_field) { create(:adventure_step_form_field_string_field) }
 
   it { is_expected.to belong_to(:form_field) }
   it { is_expected.to belong_to(:user) }

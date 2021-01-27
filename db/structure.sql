@@ -61,9 +61,9 @@ CREATE TABLE public.adventure_step_form_fields (
     step_id uuid NOT NULL,
     type character varying NOT NULL,
     name character varying NOT NULL,
-    min character varying,
-    max character varying,
     required boolean DEFAULT false NOT NULL,
+    "position" integer NOT NULL,
+    metadata jsonb DEFAULT '"{}"'::jsonb,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -366,6 +366,13 @@ CREATE INDEX index_adventure_step_form_field_responses_on_form_field_id ON publi
 --
 
 CREATE INDEX index_adventure_step_form_field_responses_on_user_id ON public.adventure_step_form_field_responses USING btree (user_id);
+
+
+--
+-- Name: index_adventure_step_form_fields_on_metadata; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adventure_step_form_fields_on_metadata ON public.adventure_step_form_fields USING gin (metadata);
 
 
 --

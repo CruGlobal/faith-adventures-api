@@ -6,11 +6,13 @@ class CreateAdventureStepFormFields < ActiveRecord::Migration[6.0]
       t.belongs_to :step, null: false, foreign_key: { on_delete: :cascade, to_table: :adventure_steps }, type: :uuid
       t.string :type, null: false
       t.string :name, null: false
-      t.string :min
-      t.string :max
       t.boolean :required, default: false, null: false
+      t.integer :position, null: false
+      t.jsonb :metadata, default: '{}'
 
       t.timestamps
     end
+
+    add_index :adventure_step_form_fields, :metadata, using: :gin
   end
 end

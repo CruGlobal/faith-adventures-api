@@ -46,7 +46,7 @@ RSpec.describe Queries::AdventuresQuery, type: :query do
 
   context 'when adventure is clone' do
     let(:user) { create(:user) }
-    let!(:adventure) { create(:adventure, :complete, published: true).start(user) }
+    let(:adventure) { create(:adventure, :complete, published: true).start(user) }
 
     it 'returns adventure' do
       resolve(query, variables: { scope_to_user: true }, context: { current_user: user })
