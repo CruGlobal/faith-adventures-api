@@ -11,6 +11,8 @@ class Types::Adventure::StepType < Types::BaseRecord
   field :slug, type: String, null: false
   field :content, type: Types::ContentInterface, null: false
   field :state, type: StateEnum, null: false
+  field :position, type: Integer, null: false
+  field :adventure, type: Types::AdventureType, null: false
   field :form_fields, Types::Adventure::Step::FormFieldInterface.connection_type, null: false
 
   def state

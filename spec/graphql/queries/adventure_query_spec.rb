@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Queries::AdventureQuery, type: :query do
   let!(:adventure) { create(:adventure, :complete, published: true) }
   let!(:step) { create(:adventure_step, adventure: adventure) }
+  let(:step_state) { 'LOCKED' }
   let(:data) do
     {
       'adventure' => {
@@ -28,6 +29,7 @@ RSpec.describe Queries::AdventureQuery, type: :query do
             'id' => step.id,
             'name' => step.name,
             'slug' => step.slug,
+            'state' => step_state,
             'content' => {
               'id' => step.content.id,
               'name' => step.content.name,
@@ -69,6 +71,7 @@ RSpec.describe Queries::AdventureQuery, type: :query do
   context 'when adventure is clone' do
     let(:user) { create(:user) }
     let!(:adventure) { create(:adventure, :complete, published: true).start(user) }
+    let(:step_state) { 'ACTIVE' }
 
     it 'returns error when no user' do
       resolve(query, variables: { id: adventure.slug })
@@ -83,9 +86,9 @@ RSpec.describe Queries::AdventureQuery, type: :query do
 
   context 'when solo adventure exists' do
     let(:user) { create(:user) }
-    let!(:clone) { adventure.start(user) }
 
     it 'returns solo_adventure id' do
+      clone = adventure.start(user)
       resolve(query, variables: { id: adventure.slug }, context: { current_user: user })
       expect(response_data['adventure']['children']['nodes'][0]['id']).to eq(clone.id), invalid_response_data
     end
@@ -117,6 +120,7 @@ RSpec.describe Queries::AdventureQuery, type: :query do
               id
               name
               slug
+              state
               content {
                 id
                 name
