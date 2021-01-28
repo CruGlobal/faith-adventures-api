@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Queries::Adventure::StepQuery, type: :query do
   let(:user) { create(:user) }
   let!(:adventure) { create(:adventure, :complete, published: true).start(user) }
-  let!(:step) { create(:adventure_step, adventure: adventure) }
+  let!(:step) { create(:adventure_step, :complete, adventure: adventure) }
   let(:state) { 'ACTIVE' }
   let(:data) do
     date_field = step.form_fields.find_by(type: Adventure::Step::FormField::DateField.to_s)
@@ -19,6 +19,7 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
         'slug' => step.slug,
         'state' => state,
         'position' => step.position,
+        'afterResponseMessage' => step.after_response_message,
         'adventure' => {
           'id' => adventure.id
         },
@@ -97,7 +98,7 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
       expect(response_data).to eq(data), invalid_response_data
     end
 
-    context 'when first step has submissions ' do
+    context 'when first step has submissions' do
       let(:state) { 'ACTIVE' }
 
       before do
@@ -123,6 +124,7 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
           slug
           state
           position
+          afterResponseMessage
           adventure {
             id
           }

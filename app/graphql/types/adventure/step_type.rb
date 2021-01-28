@@ -14,6 +14,7 @@ class Types::Adventure::StepType < Types::BaseRecord
   field :position, type: Integer, null: false
   field :adventure, type: Types::AdventureType, null: false
   field :form_fields, Types::Adventure::Step::FormFieldInterface.connection_type, null: false
+  field :after_response_message, type: String, null: true
 
   def state
     return 'LOCKED' unless context[:current_user]

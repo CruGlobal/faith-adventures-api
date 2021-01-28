@@ -5,5 +5,9 @@ FactoryBot.define do
     adventure
     association :content, factory: %i[content_arclight complete]
     name { Faker::Name.name }
+
+    trait :complete do
+      after_response_message { Faker::Company.catch_phrase }
+    end
   end
 end
