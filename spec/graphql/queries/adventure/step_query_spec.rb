@@ -101,7 +101,6 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
       let(:state) { 'ACTIVE' }
 
       before do
-        current_step = step
         first_step = adventure.steps.where.not(id: step.id).first
         number_field = create(:adventure_step_form_field_number_field, :complete, step: first_step)
         create(:adventure_step_form_field_response, user: user, value: '15', form_field: number_field)
