@@ -10,6 +10,7 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
   let(:data) do
     date_field = step.form_fields.find_by(type: Adventure::Step::FormField::DateField.to_s)
     number_field = step.form_fields.find_by(type: Adventure::Step::FormField::NumberField.to_s)
+    radio_field = step.form_fields.find_by(type: Adventure::Step::FormField::RadioField.to_s)
     string_field = step.form_fields.find_by(type: Adventure::Step::FormField::StringField.to_s)
     response = number_field.responses.find_by(user: user)
     {
@@ -47,6 +48,12 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
                               }
                             end
           }, {
+            'id' => radio_field.id,
+            'name' => radio_field.name,
+            'required' => radio_field.required,
+            'options' => radio_field.options,
+            'myResponse' => nil
+          }, {
             'id' => string_field.id,
             'name' => string_field.name,
             'required' => string_field.required,
@@ -70,6 +77,7 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
   before do
     create(:adventure_step_form_field_date_field, :complete, step: step)
     create(:adventure_step_form_field_number_field, :complete, step: step)
+    create(:adventure_step_form_field_radio_field, :complete, step: step)
     string_field = create(:adventure_step_form_field_string_field, :complete, step: step)
     create(:adventure_step_form_field_response, value: 'the quick brown fox', form_field: string_field)
   end
@@ -163,6 +171,9 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
               ... on NumberField {
                 min
                 max
+              }
+              ... on RadioField {
+                options
               }
               ... on StringField {
                 minLength

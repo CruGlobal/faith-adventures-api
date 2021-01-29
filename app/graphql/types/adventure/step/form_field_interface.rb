@@ -12,6 +12,7 @@ module Types::Adventure::Step::FormFieldInterface
   field :my_response, type: Types::Adventure::Step::FormField::ResponseType, null: true
   orphan_types Types::Adventure::Step::FormField::DateFieldType,
                Types::Adventure::Step::FormField::NumberFieldType,
+               Types::Adventure::Step::FormField::RadioFieldType,
                Types::Adventure::Step::FormField::StringFieldType
 
   definition_methods do

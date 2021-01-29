@@ -9,6 +9,7 @@ RSpec.describe Mutations::Adventure::StartMutation, type: :query do
   let(:attributes) do
     date_field = create(:adventure_step_form_field_date_field, :complete, step: step)
     number_field = create(:adventure_step_form_field_number_field, :complete, step: step)
+    radio_field = create(:adventure_step_form_field_radio_field, :complete, step: step)
     string_field = create(:adventure_step_form_field_string_field, :complete, step: step)
     create(:adventure_step_form_field_response, value: '10', form_field: number_field, user: user)
     [{
@@ -19,6 +20,10 @@ RSpec.describe Mutations::Adventure::StartMutation, type: :query do
       'id' => SecureRandom.uuid,
       'formFieldId' => number_field.id,
       'value' => '20'
+    }, {
+      'id' => SecureRandom.uuid,
+      'formFieldId' => radio_field.id,
+      'value' => radio_field.options.first
     }, {
       'id' => SecureRandom.uuid,
       'formFieldId' => string_field.id,
