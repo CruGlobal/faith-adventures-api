@@ -37,13 +37,15 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
             'required' => number_field.required,
             'min' => number_field.min.to_i,
             'max' => number_field.max.to_i,
-            'myResponse' => {
-              'id' => response.id,
-              'value' => response.value,
-              'user' => {
-                'id' => user.id
-              }
-            }
+            'myResponse' => if response
+                              {
+                                'id' => response.id,
+                                'value' => response.value,
+                                'user' => {
+                                  'id' => user.id
+                                }
+                              }
+                            end
           }, {
             'id' => string_field.id,
             'name' => string_field.name,
@@ -67,9 +69,8 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
 
   before do
     create(:adventure_step_form_field_date_field, :complete, step: step)
-    number_field = create(:adventure_step_form_field_number_field, :complete, step: step)
+    create(:adventure_step_form_field_number_field, :complete, step: step)
     string_field = create(:adventure_step_form_field_string_field, :complete, step: step)
-    create(:adventure_step_form_field_response, user: user, value: '15', form_field: number_field)
     create(:adventure_step_form_field_response, value: 'the quick brown fox', form_field: string_field)
   end
 
@@ -104,6 +105,21 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
       before do
         first_step = adventure.steps.where.not(id: step.id).first
         number_field = create(:adventure_step_form_field_number_field, :complete, step: first_step)
+        create(:adventure_step_form_field_response, user: user, value: '15', form_field: number_field)
+        step.reload
+      end
+
+      it 'return step' do
+        resolve(query, variables: { id: step.slug }, context: { current_user: user })
+        expect(response_data).to eq(data), invalid_response_data
+      end
+    end
+
+    context 'when step has submissions' do
+      let(:state) { 'COMPLETED' }
+
+      before do
+        number_field = step.form_fields.find_by(type: Adventure::Step::FormField::NumberField.to_s)
         create(:adventure_step_form_field_response, user: user, value: '15', form_field: number_field)
         step.reload
       end

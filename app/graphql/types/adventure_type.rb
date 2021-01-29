@@ -16,6 +16,10 @@ class Types::AdventureType < Types::BaseRecord
     object.tag_list.sort
   end
 
+  def steps
+    object.steps.order(:position)
+  end
+
   def children
     return object.children.joins(:users).where(users: { id: context[:current_user].id }) if context[:current_user]
 

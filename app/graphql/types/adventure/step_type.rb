@@ -4,6 +4,7 @@ class Types::Adventure::StepType < Types::BaseRecord
   class StateEnum < Types::BaseEnum
     graphql_name 'AdventureStepStateEnum'
     value 'LOCKED'
+    value 'COMPLETED'
     value 'ACTIVE'
   end
 
@@ -17,11 +18,24 @@ class Types::Adventure::StepType < Types::BaseRecord
   field :after_response_message, type: String, null: true
 
   def state
-    return 'LOCKED' unless context[:current_user]
-    return 'LOCKED' if object.adventure.template.nil?
-    return 'ACTIVE' if object.first?
-    return 'ACTIVE' if object.higher_item.responses.where(user: context[:current_user]).exists?
+    return 'LOCKED' if locked?
+    return 'COMPLETED' if completed?
+    return 'ACTIVE' if active?
 
     'LOCKED'
+  end
+
+  protected
+
+  def locked?
+    context[:current_user].nil? || object.adventure.template.nil?
+  end
+
+  def completed?
+    object.responses.where(user: context[:current_user]).exists?
+  end
+
+  def active?
+    object.first? || object.higher_item.responses.where(user: context[:current_user]).exists?
   end
 end

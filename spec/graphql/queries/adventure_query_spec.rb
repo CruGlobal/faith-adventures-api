@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Queries::AdventureQuery, type: :query do
   let!(:adventure) { create(:adventure, :complete, published: true) }
-  let!(:step) { create(:adventure_step, adventure: adventure) }
-  let(:step_state) { 'LOCKED' }
+  let!(:step1) { create(:adventure_step, adventure: adventure) }
+  let!(:step2) { create(:adventure_step, adventure: adventure, created_at: 2.weeks.ago) }
   let(:data) do
     {
       'adventure' => {
@@ -26,18 +26,9 @@ RSpec.describe Queries::AdventureQuery, type: :query do
         'steps' => {
           'totalCount' => adventure.steps.count,
           'nodes' => [{
-            'id' => step.id,
-            'name' => step.name,
-            'slug' => step.slug,
-            'state' => step_state,
-            'content' => {
-              'id' => step.content.id,
-              'name' => step.content.name,
-              'description' => step.content.description,
-              'locale' => step.content.locale.underscore.upcase,
-              'mediaComponentId' => step.content.media_component_id,
-              'mediaLanguageId' => step.content.media_language_id
-            }
+            'id' => step1.id
+          }, {
+            'id' => step2.id
           }]
         },
         'children' => {
@@ -71,7 +62,6 @@ RSpec.describe Queries::AdventureQuery, type: :query do
   context 'when adventure is clone' do
     let(:user) { create(:user) }
     let!(:adventure) { create(:adventure, :complete, published: true).start(user) }
-    let(:step_state) { 'ACTIVE' }
 
     it 'returns error when no user' do
       resolve(query, variables: { id: adventure.slug })
@@ -118,19 +108,6 @@ RSpec.describe Queries::AdventureQuery, type: :query do
             totalCount
             nodes {
               id
-              name
-              slug
-              state
-              content {
-                id
-                name
-                description
-                locale
-                ... on Arclight {
-                  mediaComponentId
-                  mediaLanguageId
-                }
-              }
             }
           }
           children {
