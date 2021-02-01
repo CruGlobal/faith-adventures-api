@@ -7,6 +7,7 @@ FactoryBot.define do
     name { Faker::Name.name }
 
     trait :complete do
+      before_response_message { Faker::Company.catch_phrase }
       after_response_message { Faker::Company.catch_phrase }
     end
   end

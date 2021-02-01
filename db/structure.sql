@@ -82,7 +82,8 @@ CREATE TABLE public.adventure_steps (
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying NOT NULL,
     slug character varying,
-    after_response_message character varying
+    after_response_message character varying,
+    before_response_message character varying
 );
 
 
@@ -648,6 +649,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210125020142'),
 ('20210126034234'),
 ('20210126034537'),
-('20210128215938');
+('20210128215938'),
+('20210129045506');
 
 

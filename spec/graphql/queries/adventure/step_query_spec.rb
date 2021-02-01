@@ -20,6 +20,7 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
         'slug' => step.slug,
         'state' => state,
         'position' => step.position,
+        'beforeResponseMessage' => step.before_response_message,
         'afterResponseMessage' => step.after_response_message,
         'adventure' => {
           'id' => adventure.id
@@ -148,6 +149,7 @@ RSpec.describe Queries::Adventure::StepQuery, type: :query do
           slug
           state
           position
+          beforeResponseMessage
           afterResponseMessage
           adventure {
             id
