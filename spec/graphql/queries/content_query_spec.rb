@@ -4,11 +4,14 @@ require 'rails_helper'
 
 RSpec.describe Queries::ContentQuery, type: :query do
   let!(:content) { create(:content_arclight, :complete) }
+  let!(:adventure1) { create(:adventure, :complete, content: content, published: true) }
+  let!(:adventure2) { create(:adventure, :complete, published: true) }
   let(:data) do
     {
       'content' => {
         'id' => content.id,
         'name' => content.name,
+        'slug' => content.slug,
         'description' => content.description,
         'locale' => content.locale.underscore.upcase,
         'mediaComponentId' => content.media_component_id,
@@ -17,10 +20,15 @@ RSpec.describe Queries::ContentQuery, type: :query do
         'pictureSmallUrl' => content.picture_small_url,
         'pictureMediumUrl' => content.picture_medium_url,
         'pictureLargeUrl' => content.picture_large_url,
-        'hlsUrl' => content.hls_url
+        'hlsUrl' => content.hls_url,
+        'adventures' => {
+          'nodes' => [{ 'id' => adventure1.id }, { 'id' => adventure2.id }]
+        }
       }
     }
   end
+
+  before { create(:adventure_step, content: content, adventure: adventure2) }
 
   it 'return content' do
     resolve(query, variables: { id: content.slug })
@@ -40,6 +48,7 @@ RSpec.describe Queries::ContentQuery, type: :query do
         content(id: $id) {
           id
           name
+          slug
           description
           locale
           ... on Arclight {
@@ -50,6 +59,11 @@ RSpec.describe Queries::ContentQuery, type: :query do
             pictureMediumUrl
             pictureLargeUrl
             hlsUrl
+          }
+          adventures {
+            nodes {
+              id
+            }
           }
         }
       }
