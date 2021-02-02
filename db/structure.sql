@@ -130,7 +130,8 @@ CREATE TABLE public.contents (
     type character varying NOT NULL,
     metadata jsonb DEFAULT '"{}"'::jsonb NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    slug character varying
 );
 
 
@@ -434,6 +435,13 @@ CREATE INDEX index_contents_on_metadata ON public.contents USING gin (metadata);
 
 
 --
+-- Name: index_contents_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_contents_on_slug ON public.contents USING btree (slug);
+
+
+--
 -- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -650,6 +658,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210126034234'),
 ('20210126034537'),
 ('20210128215938'),
-('20210129045506');
+('20210129045506'),
+('20210202215451');
 
 
