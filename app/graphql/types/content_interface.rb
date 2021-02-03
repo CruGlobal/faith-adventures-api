@@ -16,6 +16,7 @@ module Types::ContentInterface
     scope = Adventure.left_outer_joins(:steps).published
     scope.where(content_id: object.id)
          .or(scope.where({ adventure_steps: { content_id: object.id } }))
+         .distinct
   end
 
   definition_methods do
