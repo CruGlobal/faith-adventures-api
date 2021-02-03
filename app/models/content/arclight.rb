@@ -58,6 +58,6 @@ class Content::Arclight < Content
   end
 
   def set_hls_url
-    self.hls_url = media_payload['streamingUrls']['hls'].map { |hls| hls['url'] }[0]
+    self.hls_url = media_payload['streamingUrls']['hls'].map { |hls| hls['url'] }[0]&.gsub('http://', 'https://')
   end
 end

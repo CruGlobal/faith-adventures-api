@@ -51,7 +51,7 @@ RSpec.describe Content::Arclight, type: :model, vcr: vcr_options do
 
   describe '#set_hls_url' do
     it 'sets hls_url' do
-      expect(arclight.hls_url).to eq 'http://arc.gt/j67rz?apiSessionId=1234567890'
+      expect(arclight.hls_url).to eq 'https://arc.gt/j67rz?apiSessionId=1234567890'
     end
   end
 end
