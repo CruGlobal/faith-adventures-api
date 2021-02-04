@@ -19,45 +19,62 @@ class Content::Arclight < Content
             :picture_large_url,
             :hls_url,
             presence: true
-  before_validation :set_attributes, :set_picture_urls, :set_hls_url
+  before_validation :set_content_attributes, :set_metadata_attributes
+
+  def self.get(path, query: {}, retries: 3)
+    response = HTTParty.get(
+      "https://api.arclight.org/v2/#{path}",
+      query: query.merge('apiKey' => ENV.fetch('ARCLIGHT_API_KEY'), 'platform' => 'android')
+    )
+    raise HTTParty::Error unless response.ok?
+
+    response.to_h
+  rescue HTTParty::Error
+    raise if (retries -= 1).negative?
+
+    sleep(10)
+    retry
+  end
+
+  def self.languages
+    @languages ||= get('media-languages', query: { 'limit' => 5000 })['_embedded']['mediaLanguages']
+  end
 
   def metadata_payload
-    return @metadata_payload if @metadata_payload
-
-    response = HTTParty.get(
-      "http://api.arclight.org/v2/media-components/#{media_component_id}",
-      query: { 'apiKey' => ENV.fetch('ARCLIGHT_API_KEY') },
-      headers: { 'Accept-Language' => 'en-US' }
-    )
-
-    self.metadata_payload = response.to_h if response.success?
+    @metadata_payload ||= Content::Arclight.get("media-components/#{media_component_id}")
   end
 
   def media_payload
-    return @media_payload if @media_payload
-
-    response = HTTParty.get(
-      "http://api.arclight.org/v2/media-components/#{media_component_id}/languages/#{media_language_id}",
-      query: { 'apiKey' => ENV.fetch('ARCLIGHT_API_KEY'), 'platform' => 'android' }
-    )
-    self.media_payload = response.to_h if response.success?
+    @media_payload ||= Content::Arclight.get("media-components/#{media_component_id}/languages/#{media_language_id}")
   end
 
   protected
 
-  def set_attributes
+  def set_content_attributes
     self.name = metadata_payload['title']
     self.description = metadata_payload['shortDescription']
+    self.locale ||= self.class.languages.find do |language|
+      language['languageId'].to_s == media_language_id
+    end&.dig('bcp47')
+  end
+
+  def set_metadata_attributes
+    set_duration
+    set_picture_urls
+    set_hls_url
+  end
+
+  def set_duration
     self.duration = metadata_payload['lengthInMilliseconds']
   end
 
   def set_picture_urls
-    self.picture_small_url = metadata_payload['imageUrls']['mobileCinematicVeryLow']
-    self.picture_medium_url = metadata_payload['imageUrls']['mobileCinematicLow']
     self.picture_large_url = metadata_payload['imageUrls']['mobileCinematicHigh']
+    self.picture_medium_url = metadata_payload['imageUrls']['mobileCinematicLow']
+    self.picture_small_url = metadata_payload['imageUrls']['mobileCinematicVeryLow'].presence || picture_medium_url
   end
 
   def set_hls_url
-    self.hls_url = media_payload['streamingUrls']['hls'].map { |hls| hls['url'] }[0]&.gsub('http://', 'https://')
+    self.hls_url = media_payload.dig('streamingUrls', 'hls')&.map { |hls| hls['url'] }&.first
   end
 end

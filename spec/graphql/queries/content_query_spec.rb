@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Queries::ContentQuery, type: :query do
   let!(:content) { create(:content_arclight, :complete) }
-  let!(:adventure1) { create(:adventure, :complete, content: content, published: true) }
+  let!(:adventure1) { create(:adventure, :complete, content: content, published: true, created_at: 1.month.ago) }
   let!(:adventure2) { create(:adventure, :complete, published: true) }
   let(:data) do
     {

@@ -128,7 +128,7 @@ CREATE TABLE public.contents (
     name character varying NOT NULL,
     description text,
     type character varying NOT NULL,
-    metadata jsonb DEFAULT '"{}"'::jsonb NOT NULL,
+    metadata jsonb DEFAULT '{}'::jsonb NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     slug character varying

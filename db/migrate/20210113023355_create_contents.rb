@@ -7,7 +7,7 @@ class CreateContents < ActiveRecord::Migration[6.0]
       t.string :name, null: false
       t.text :description
       t.string :type, null: false
-      t.jsonb :metadata, null: false, default: '{}'
+      t.jsonb :metadata, null: false, default: {}
       t.timestamps
     end
 
