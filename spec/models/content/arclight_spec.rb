@@ -11,6 +11,12 @@ RSpec.describe Content::Arclight, type: :model, vcr: vcr_options do
   it { is_expected.to validate_presence_of(:media_language_id) }
   it { is_expected.to validate_inclusion_of(:locale).in_array(I18n.available_locales.map(&:to_s)) }
 
+  describe '.languages' do
+    it 'fetches languages' do
+      expect(described_class.languages[0]['bcp47']).to eq 'en'
+    end
+  end
+
   describe '#set_attributes' do
     it 'sets name' do
       expect(arclight.name).to eq 'JESUS'

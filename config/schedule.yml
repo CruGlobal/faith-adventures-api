@@ -1,3 +1,6 @@
 cron_fetch_firebase_certificates_worker:
   cron: "*/30 * * * *"
   class: "Cron::FetchFirebaseCertificatesWorker"
+cron_fetch_arclight_content_worker:
+  cron: "0 0 * * *"
+  class: "Cron::FetchArclightContentWorker"
