@@ -6,6 +6,8 @@ class Content < ApplicationRecord
   acts_as_taggable_on :tags
   validates :name, :locale, :type, presence: true
   validates :locale, inclusion: { in: I18n.available_locales.map(&:to_s) }
+  scope :published, -> { where(published: true) }
+  scope :featured, -> { where(featured: true) }
 
   def slug_candidates
     [:name, %i[name locale]]

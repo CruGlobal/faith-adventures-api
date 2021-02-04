@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Queries::ContentQuery, type: :query do
-  let!(:content) { create(:content_arclight, :complete) }
+  let!(:content) { create(:content_arclight, :complete, published: true) }
   let!(:adventure1) { create(:adventure, :complete, content: content, published: true, created_at: 1.month.ago) }
   let!(:adventure2) { create(:adventure, :complete, published: true) }
   let(:data) do
@@ -33,6 +33,15 @@ RSpec.describe Queries::ContentQuery, type: :query do
   it 'return content' do
     resolve(query, variables: { id: content.slug })
     expect(response_data).to eq(data), invalid_response_data
+  end
+
+  context 'when content not published' do
+    let!(:content) { create(:content_arclight, :complete, published: false) }
+
+    it 'returns error' do
+      resolve(query, variables: { id: content.slug })
+      expect(response_errors[0]['extensions']['code']).to eq('NOT_FOUND'), invalid_response_data
+    end
   end
 
   context 'when no content by slug' do

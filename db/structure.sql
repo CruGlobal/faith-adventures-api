@@ -131,7 +131,9 @@ CREATE TABLE public.contents (
     metadata jsonb DEFAULT '{}'::jsonb NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    slug character varying
+    slug character varying,
+    published boolean,
+    featured boolean
 );
 
 
@@ -659,6 +661,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210126034537'),
 ('20210128215938'),
 ('20210129045506'),
-('20210202215451');
+('20210202215451'),
+('20210204195328');
 
 

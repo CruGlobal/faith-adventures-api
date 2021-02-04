@@ -6,6 +6,6 @@ class Queries::ContentQuery < Queries::ApplicationQuery
   argument :id, ID, required: true, description: 'Can be ID or slug'
 
   def resolve(id:)
-    Content.friendly.find(id)
+    Content.published.friendly.find(id)
   end
 end

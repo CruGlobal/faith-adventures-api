@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Queries::ContentsQuery, type: :query do
-  let!(:content) { create(:content_arclight, :complete) }
+  let!(:content) { create(:content_arclight, :complete, published: true) }
   let(:data) do
     {
       'contents' => {
@@ -19,8 +19,17 @@ RSpec.describe Queries::ContentsQuery, type: :query do
     expect(response_data).to eq(data), invalid_response_data
   end
 
+  context 'when filtered by featured' do
+    before { content.update(featured: true) }
+
+    it 'returns contents' do
+      resolve(query, variables: { featured: true })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
   context 'when filtered by locale' do
-    let(:content) { create(:content_arclight, :complete, locale: 'en') }
+    let(:content) { create(:content_arclight, :complete, locale: 'en', published: true) }
 
     it 'return contents' do
       resolve(query, variables: { locale: 'EN' })
@@ -30,8 +39,8 @@ RSpec.describe Queries::ContentsQuery, type: :query do
 
   def query
     <<~GQL
-      query($locale: LocaleEnum) {
-        contents(locale: $locale) {
+      query($featured: Boolean, $locale: LocaleEnum) {
+        contents(featured: $featured, locale: $locale) {
           nodes {
             id
           }

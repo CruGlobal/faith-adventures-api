@@ -11,6 +11,26 @@ RSpec.describe Content::Arclight, type: :model, vcr: vcr_options do
   it { is_expected.to validate_presence_of(:media_language_id) }
   it { is_expected.to validate_inclusion_of(:locale).in_array(I18n.available_locales.map(&:to_s)) }
 
+  describe '.published' do
+    let(:content) { create(:content_arclight, :complete, published: true) }
+
+    before { create(:content_arclight, :complete, published: false) }
+
+    it 'returns published' do
+      expect(described_class.published).to eq [content]
+    end
+  end
+
+  describe '.featured' do
+    let(:content) { create(:content_arclight, :complete, featured: true) }
+
+    before { create(:content_arclight, :complete, featured: false) }
+
+    it 'returns featured' do
+      expect(described_class.featured).to eq [content]
+    end
+  end
+
   describe '.languages' do
     it 'fetches languages' do
       expect(described_class.languages[0]['bcp47']).to eq 'en'
