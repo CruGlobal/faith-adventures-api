@@ -11,7 +11,7 @@ class Queries::ContentsQuery < Queries::ApplicationQuery
     scope = Content.published.order(:name)
     scope = scope.where(featured: featured ? true : [false, nil]) unless featured.nil?
     scope = scope.where(locale: locale) unless locale.nil?
-    scope = scope.where('lower(name) LIKE :search', search: "%#{search.downcase}%") if search
+    scope = scope.where('lower(name) LIKE :search', search: "%#{search.downcase}%") if search.present?
     scope
   end
 end
