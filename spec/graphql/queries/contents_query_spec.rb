@@ -37,10 +37,17 @@ RSpec.describe Queries::ContentsQuery, type: :query do
     end
   end
 
+  context 'when filtered by search' do
+    it 'return contents' do
+      resolve(query, variables: { search: 'eSu' })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
   def query
     <<~GQL
-      query($featured: Boolean, $locale: LocaleEnum) {
-        contents(featured: $featured, locale: $locale) {
+      query($featured: Boolean, $locale: LocaleEnum, $search: String) {
+        contents(featured: $featured, locale: $locale, search: $search) {
           nodes {
             id
           }
