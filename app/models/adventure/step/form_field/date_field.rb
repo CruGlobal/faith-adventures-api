@@ -36,13 +36,13 @@ class Adventure::Step::FormField::DateField < Adventure::Step::FormField
   end
 
   def validate_min_date_valid_value
-    Date.iso8601(min_date) if min_date.present?
+    Date.iso8601(min_date) if min_date.present? && !min_date.is_a?(Date)
   rescue Date::Error
     errors.add :min, 'must be a valid date'
   end
 
   def validate_max_date_valid_value
-    Date.iso8601(max_date) if max_date.present?
+    Date.iso8601(max_date) if max_date.present? && !max_date.is_a?(Date)
   rescue Date::Error
     errors.add :max, 'must be a valid date'
   end

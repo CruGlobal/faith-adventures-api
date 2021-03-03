@@ -10,6 +10,7 @@ module Types::Adventure::Step::FormFieldInterface
   field :position, type: Integer, null: false
   field :step, type: Types::Adventure::StepType, null: false
   field :my_response, type: Types::Adventure::Step::FormField::ResponseType, null: true
+  field :type, type: Types::Adventure::Step::FormField::TypeEnum, null: false
   orphan_types Types::Adventure::Step::FormField::DateFieldType,
                Types::Adventure::Step::FormField::NumberFieldType,
                Types::Adventure::Step::FormField::RadioFieldType,

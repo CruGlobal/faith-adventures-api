@@ -3,7 +3,7 @@
 class Adventure::Step::FormField < ApplicationRecord
   belongs_to :step
   has_many :responses, dependent: :delete_all, class_name: 'Adventure::Step::FormField::Response'
-  validates :type, :name, presence: true
+  validates :name, :type, presence: true
   acts_as_list scope: [:step_id]
   store :metadata, coder: JSON
 

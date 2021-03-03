@@ -8,6 +8,9 @@ class Types::MutationType < Types::BaseObject
   field :adventure_step_create, resolver: Mutations::Adventure::Step::CreateMutation
   field :adventure_step_update, resolver: Mutations::Adventure::Step::UpdateMutation
   field :adventure_step_destroy, resolver: Mutations::Adventure::Step::DestroyMutation
+  field :adventure_step_form_field_create, resolver: Mutations::Adventure::Step::FormField::CreateMutation
+  field :adventure_step_form_field_update, resolver: Mutations::Adventure::Step::FormField::UpdateMutation
+  field :adventure_step_form_field_destroy, resolver: Mutations::Adventure::Step::FormField::DestroyMutation
   field :adventure_step_form_field_response_bulk_upsert,
         resolver: Mutations::Adventure::Step::FormField::Response::BulkUpsertMutation
 end
