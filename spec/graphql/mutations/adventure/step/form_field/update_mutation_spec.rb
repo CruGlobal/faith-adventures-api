@@ -52,7 +52,7 @@ RSpec.describe Mutations::Adventure::Step::FormField::UpdateMutation, type: :que
   context 'when date' do
     let(:attributes) do
       {
-      id: form_field.id,
+        id: form_field.id,
         name: Faker::Name.name,
         required: true,
         type: 'DATE',
@@ -87,7 +87,7 @@ RSpec.describe Mutations::Adventure::Step::FormField::UpdateMutation, type: :que
   context 'when number' do
     let(:attributes) do
       {
-      id: form_field.id,
+        id: form_field.id,
         name: Faker::Name.name,
         required: true,
         type: 'NUMBER',
@@ -122,7 +122,7 @@ RSpec.describe Mutations::Adventure::Step::FormField::UpdateMutation, type: :que
   context 'when radio' do
     let(:attributes) do
       {
-      id: form_field.id,
+        id: form_field.id,
         name: Faker::Name.name,
         required: true,
         type: 'RADIO',
