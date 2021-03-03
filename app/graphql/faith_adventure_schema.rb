@@ -3,10 +3,6 @@
 class FaithAdventureSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
-  use GraphQL::Execution::Interpreter
-  use GraphQL::Analysis::AST
-  use GraphQL::Execution::Errors
-  use GraphQL::Pagination::Connections
   use GraphQL::Batch
 
   rescue_from(ActiveRecord::RecordNotFound) do |err, _obj, _args, _ctx, _field|

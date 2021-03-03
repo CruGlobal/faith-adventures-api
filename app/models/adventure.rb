@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Adventure < ApplicationRecord
+  resourcify
   extend FriendlyId
   friendly_id :name, use: :slugged
   acts_as_taggable_on :tags

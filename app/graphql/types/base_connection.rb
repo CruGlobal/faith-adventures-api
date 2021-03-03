@@ -17,6 +17,13 @@ class Types::BaseConnection < GraphQL::Types::Relay::BaseConnection
 
     return 1 unless my_total_count.positive?
 
+    # return the total_count divided by the page size, rounded up
+    (my_total_count / actual_page_size(my_total_count).to_f).ceil
+  end
+
+  private
+
+  def actual_page_size(my_total_count)
     # get total count and create array with total count as first item
     possible_page_sizes = [my_total_count]
 
@@ -24,14 +31,8 @@ class Types::BaseConnection < GraphQL::Types::Relay::BaseConnection
     possible_page_sizes.push(object.arguments[:first]) if object.arguments[:first]
     possible_page_sizes.push(object.arguments[:last]) if object.arguments[:last]
 
-    # get the smallest of the array items
-    actual_page_size = possible_page_sizes.min
-
-    # return the total_count divided by the page size, rounded up
-    (my_total_count / actual_page_size.to_f).ceil
+    possible_page_sizes.min
   end
-
-  private
 
   def base_klass
     object.items&.class&.to_s&.deconstantize&.constantize

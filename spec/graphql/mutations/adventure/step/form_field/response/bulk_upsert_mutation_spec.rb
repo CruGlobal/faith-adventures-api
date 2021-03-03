@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Mutations::Adventure::StartMutation, type: :query do
+RSpec.describe Mutations::Adventure::Step::FormField::Response::BulkUpsertMutation, type: :query do
   let(:user) { create(:user) }
   let(:adventure) { create(:adventure, :complete, published: true).start(user) }
   let!(:step) { create(:adventure_step, adventure: adventure) }

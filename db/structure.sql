@@ -171,6 +171,20 @@ ALTER SEQUENCE public.friendly_id_slugs_id_seq OWNED BY public.friendly_id_slugs
 
 
 --
+-- Name: roles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.roles (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    name character varying,
+    resource_type character varying,
+    resource_id uuid,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -225,6 +239,16 @@ CREATE TABLE public.users (
     email_verified boolean,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: users_roles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users_roles (
+    user_id uuid,
+    role_id uuid
 );
 
 
@@ -297,6 +321,14 @@ ALTER TABLE ONLY public.contents
 
 ALTER TABLE ONLY public.friendly_id_slugs
     ADD CONSTRAINT friendly_id_slugs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
 
 
 --
@@ -465,6 +497,20 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_type_and_sluggable_id ON publi
 
 
 --
+-- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_roles_on_name_and_resource_type_and_resource_id ON public.roles USING btree (name, resource_type, resource_id);
+
+
+--
+-- Name: index_roles_on_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_roles_on_resource_type_and_resource_id ON public.roles USING btree (resource_type, resource_id);
+
+
+--
 -- Name: index_taggings_on_context; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -532,6 +578,27 @@ CREATE UNIQUE INDEX index_tags_on_name ON public.tags USING btree (name);
 --
 
 CREATE UNIQUE INDEX index_users_on_sub ON public.users USING btree (sub);
+
+
+--
+-- Name: index_users_roles_on_role_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_roles_on_role_id ON public.users_roles USING btree (role_id);
+
+
+--
+-- Name: index_users_roles_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_roles_on_user_id ON public.users_roles USING btree (user_id);
+
+
+--
+-- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_roles_on_user_id_and_role_id ON public.users_roles USING btree (user_id, role_id);
 
 
 --
@@ -662,6 +729,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210128215938'),
 ('20210129045506'),
 ('20210202215451'),
-('20210204195328');
+('20210204195328'),
+('20210302233745');
 
 

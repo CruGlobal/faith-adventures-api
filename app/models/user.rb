@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  rolify
   validates :sub, presence: true, uniqueness: true
   has_many :memberships, class_name: 'Adventure::Membership', dependent: :delete_all
   has_many :adventures, through: :memberships
