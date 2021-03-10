@@ -28,7 +28,7 @@ RSpec.describe Queries::MeQuery, type: :query do
 
   context 'when admin' do
     before { user.add_role(:admin) }
-    
+
     it 'return user' do
       resolve(query, context: { current_user: user })
       expect(response_data).to eq(data), invalid_response_data

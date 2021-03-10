@@ -10,6 +10,6 @@ class Types::User::MeType < Types::UserType
   field :admin, type: Boolean, null: false
 
   def admin
-    @user.has_role?(:admin)
+    object.has_role?(:admin)
   end
 end
