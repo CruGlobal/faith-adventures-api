@@ -3,6 +3,6 @@ test:
   adapter: postgresql
   encoding: unicode
   pool: 20
-  database: work_api_test
+  database: faith_adventures_api_test
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>

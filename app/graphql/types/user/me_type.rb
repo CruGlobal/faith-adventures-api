@@ -7,4 +7,9 @@ class Types::User::MeType < Types::UserType
   field :locale, type: String, null: true
   field :email, type: String, null: true
   field :email_verified, type: Boolean, null: true
+  field :admin, type: Boolean, null: false
+
+  def admin
+    @user.has_role?(:admin)
+  end
 end

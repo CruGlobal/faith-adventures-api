@@ -25,12 +25,14 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 SET default_tablespace = '';
 
+SET default_table_access_method = heap;
+
 --
 -- Name: adventure_memberships; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.adventure_memberships (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     user_id uuid NOT NULL,
     adventure_id uuid NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -43,7 +45,7 @@ CREATE TABLE public.adventure_memberships (
 --
 
 CREATE TABLE public.adventure_step_form_field_responses (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     form_field_id uuid NOT NULL,
     user_id uuid NOT NULL,
     value text,
@@ -57,7 +59,7 @@ CREATE TABLE public.adventure_step_form_field_responses (
 --
 
 CREATE TABLE public.adventure_step_form_fields (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     step_id uuid NOT NULL,
     type character varying NOT NULL,
     name character varying NOT NULL,
@@ -74,7 +76,7 @@ CREATE TABLE public.adventure_step_form_fields (
 --
 
 CREATE TABLE public.adventure_steps (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     adventure_id uuid NOT NULL,
     content_id uuid NOT NULL,
     "position" integer NOT NULL,
@@ -92,7 +94,7 @@ CREATE TABLE public.adventure_steps (
 --
 
 CREATE TABLE public.adventures (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     template_id uuid,
     content_id uuid NOT NULL,
     name character varying NOT NULL,
@@ -123,7 +125,7 @@ CREATE TABLE public.ar_internal_metadata (
 --
 
 CREATE TABLE public.contents (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     locale character varying NOT NULL,
     name character varying NOT NULL,
     description text,
@@ -175,7 +177,7 @@ ALTER SEQUENCE public.friendly_id_slugs_id_seq OWNED BY public.friendly_id_slugs
 --
 
 CREATE TABLE public.roles (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     name character varying,
     resource_type character varying,
     resource_id uuid,
@@ -198,7 +200,7 @@ CREATE TABLE public.schema_migrations (
 --
 
 CREATE TABLE public.taggings (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     tag_id uuid,
     taggable_type character varying,
     taggable_id uuid,
@@ -214,7 +216,7 @@ CREATE TABLE public.taggings (
 --
 
 CREATE TABLE public.tags (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     name character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -227,7 +229,7 @@ CREATE TABLE public.tags (
 --
 
 CREATE TABLE public.users (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     sub character varying NOT NULL,
     given_name character varying,
     family_name character varying,

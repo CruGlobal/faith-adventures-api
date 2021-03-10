@@ -15,7 +15,8 @@ RSpec.describe Queries::MeQuery, type: :query do
         'picture' => user.picture,
         'locale' => user.locale,
         'email' => user.email,
-        'emailVerified' => user.email_verified
+        'emailVerified' => user.email_verified,
+        'admin' => user.has_role?(:admin)
       }
     }
   end
@@ -23,6 +24,15 @@ RSpec.describe Queries::MeQuery, type: :query do
   it 'return user' do
     resolve(query, context: { current_user: user })
     expect(response_data).to eq(data), invalid_response_data
+  end
+
+  context 'when admin' do
+    before { user.add_role(:admin) }
+    
+    it 'return user' do
+      resolve(query, context: { current_user: user })
+      expect(response_data).to eq(data), invalid_response_data
+    end
   end
 
   context 'when no current_user' do
@@ -45,6 +55,7 @@ RSpec.describe Queries::MeQuery, type: :query do
           locale
           email
           emailVerified
+          admin
         }
       }
     GQL
