@@ -9,6 +9,6 @@ class Content::Like < ApplicationRecord
   private
 
   def destroy_dislike
-    content.dislikes.find_by(user: user)&.delete
+    content.dislikes.find_by(user: user)&.destroy
   end
 end

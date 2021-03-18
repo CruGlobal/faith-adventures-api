@@ -12,6 +12,8 @@ RSpec.describe Mutations::Content::Dislike::ToggleMutation, type: :query do
         'dislike' => {
           'content' => {
             'id' => content.id,
+            'likesCount' => 0,
+            'like' => false,
             'dislikesCount' => 1,
             'dislike' => true
           },
@@ -38,8 +40,39 @@ RSpec.describe Mutations::Content::Dislike::ToggleMutation, type: :query do
           'dislike' => {
             'content' => {
               'id' => content.id,
+              'likesCount' => 0,
+              'like' => false,
               'dislikesCount' => 0,
               'dislike' => false
+            },
+            'user' => {
+              'id' => user.id
+            }
+          }
+        }
+      }
+    end
+
+    it 'return dislike' do
+      resolve(query, variables: { id: content.slug }, context: { current_user: user })
+      expect(response_data).to eq(data), invalid_response_data
+    end
+  end
+
+  context 'when like exists' do
+    before { create(:content_like, content: content, user: user) }
+
+    let(:data) do
+      {
+        'contentDislikeToggle' => {
+          'clientMutationId' => 'abc',
+          'dislike' => {
+            'content' => {
+              'id' => content.id,
+              'likesCount' => 0,
+              'like' => false,
+              'dislikesCount' => 1,
+              'dislike' => true
             },
             'user' => {
               'id' => user.id
@@ -74,6 +107,8 @@ RSpec.describe Mutations::Content::Dislike::ToggleMutation, type: :query do
           dislike {
             content {
               id
+              likesCount
+              like
               dislikesCount
               dislike
             }
