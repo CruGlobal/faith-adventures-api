@@ -6,6 +6,7 @@ vcr_options = { cassette_name: 'content/arclight', match_requests_on: [:uri] }
 RSpec.describe Content::Arclight, type: :model, vcr: vcr_options do
   subject(:arclight) { create(:content_arclight) }
 
+  it { is_expected.to have_many(:views).dependent(:delete_all) }
   it { is_expected.to validate_presence_of(:type) }
   it { is_expected.to validate_presence_of(:media_component_id) }
   it { is_expected.to validate_presence_of(:media_language_id) }

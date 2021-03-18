@@ -8,8 +8,9 @@ module Types::ContentInterface
   field :name, String, null: false
   field :slug, String, null: false
   field :description, String, null: true
-  field :locale, type: Types::LocaleEnum, null: false
-  field :adventures, type: Types::AdventureType.connection_type, null: false
+  field :locale, Types::LocaleEnum, null: false
+  field :adventures, Types::AdventureType.connection_type, null: false
+  field :views_count, Integer, null: false
   orphan_types Types::Content::ArclightType
 
   def adventures

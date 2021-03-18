@@ -13,4 +13,5 @@ class Types::MutationType < Types::BaseObject
   field :adventure_step_form_field_destroy, resolver: Mutations::Adventure::Step::FormField::DestroyMutation
   field :adventure_step_form_field_response_bulk_upsert,
         resolver: Mutations::Adventure::Step::FormField::Response::BulkUpsertMutation
+  field :content_view_create, resolver: Mutations::Content::View::CreateMutation
 end

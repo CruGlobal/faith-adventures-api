@@ -121,6 +121,19 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: content_views; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.content_views (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    content_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: contents; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -135,7 +148,8 @@ CREATE TABLE public.contents (
     updated_at timestamp(6) without time zone NOT NULL,
     slug character varying,
     published boolean,
-    featured boolean
+    featured boolean,
+    views_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -310,6 +324,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: content_views content_views_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_views
+    ADD CONSTRAINT content_views_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: contents contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -461,6 +483,27 @@ CREATE UNIQUE INDEX index_adventures_on_slug ON public.adventures USING btree (s
 --
 
 CREATE INDEX index_adventures_on_template_id ON public.adventures USING btree (template_id);
+
+
+--
+-- Name: index_content_views_on_content_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_views_on_content_id ON public.content_views USING btree (content_id);
+
+
+--
+-- Name: index_content_views_on_content_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_content_views_on_content_id_and_user_id ON public.content_views USING btree (content_id, user_id);
+
+
+--
+-- Name: index_content_views_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_views_on_user_id ON public.content_views USING btree (user_id);
 
 
 --
@@ -641,11 +684,27 @@ ALTER TABLE ONLY public.adventure_step_form_field_responses
 
 
 --
+-- Name: content_views fk_rails_21cb803d82; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_views
+    ADD CONSTRAINT fk_rails_21cb803d82 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: adventure_step_form_field_responses fk_rails_40bcc69806; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.adventure_step_form_field_responses
     ADD CONSTRAINT fk_rails_40bcc69806 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: content_views fk_rails_63661d8cce; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_views
+    ADD CONSTRAINT fk_rails_63661d8cce FOREIGN KEY (content_id) REFERENCES public.contents(id) ON DELETE CASCADE;
 
 
 --
@@ -732,6 +791,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210129045506'),
 ('20210202215451'),
 ('20210204195328'),
-('20210302233745');
+('20210302233745'),
+('20210318012620'),
+('20210318013948');
 
 

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :sub, presence: true, uniqueness: true
   has_many :memberships, class_name: 'Adventure::Membership', dependent: :delete_all
   has_many :adventures, through: :memberships
+  has_many :views, class_name: 'Content::View', dependent: :delete_all
   has_many :steps, through: :adventures
 
   def self.from_token(token)
