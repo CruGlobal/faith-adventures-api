@@ -121,6 +121,32 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: content_dislikes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.content_dislikes (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    content_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: content_likes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.content_likes (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    content_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: content_views; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -149,7 +175,9 @@ CREATE TABLE public.contents (
     slug character varying,
     published boolean,
     featured boolean,
-    views_count integer DEFAULT 0 NOT NULL
+    views_count integer DEFAULT 0 NOT NULL,
+    likes_count integer DEFAULT 0 NOT NULL,
+    dislikes_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -324,6 +352,22 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: content_dislikes content_dislikes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_dislikes
+    ADD CONSTRAINT content_dislikes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: content_likes content_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_likes
+    ADD CONSTRAINT content_likes_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: content_views content_views_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -483,6 +527,48 @@ CREATE UNIQUE INDEX index_adventures_on_slug ON public.adventures USING btree (s
 --
 
 CREATE INDEX index_adventures_on_template_id ON public.adventures USING btree (template_id);
+
+
+--
+-- Name: index_content_dislikes_on_content_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_dislikes_on_content_id ON public.content_dislikes USING btree (content_id);
+
+
+--
+-- Name: index_content_dislikes_on_content_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_content_dislikes_on_content_id_and_user_id ON public.content_dislikes USING btree (content_id, user_id);
+
+
+--
+-- Name: index_content_dislikes_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_dislikes_on_user_id ON public.content_dislikes USING btree (user_id);
+
+
+--
+-- Name: index_content_likes_on_content_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_likes_on_content_id ON public.content_likes USING btree (content_id);
+
+
+--
+-- Name: index_content_likes_on_content_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_content_likes_on_content_id_and_user_id ON public.content_likes USING btree (content_id, user_id);
+
+
+--
+-- Name: index_content_likes_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_likes_on_user_id ON public.content_likes USING btree (user_id);
 
 
 --
@@ -692,6 +778,14 @@ ALTER TABLE ONLY public.content_views
 
 
 --
+-- Name: content_likes fk_rails_34739cfb65; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_likes
+    ADD CONSTRAINT fk_rails_34739cfb65 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: adventure_step_form_field_responses fk_rails_40bcc69806; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -700,11 +794,27 @@ ALTER TABLE ONLY public.adventure_step_form_field_responses
 
 
 --
+-- Name: content_likes fk_rails_57ba806fc8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_likes
+    ADD CONSTRAINT fk_rails_57ba806fc8 FOREIGN KEY (content_id) REFERENCES public.contents(id) ON DELETE CASCADE;
+
+
+--
 -- Name: content_views fk_rails_63661d8cce; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.content_views
     ADD CONSTRAINT fk_rails_63661d8cce FOREIGN KEY (content_id) REFERENCES public.contents(id) ON DELETE CASCADE;
+
+
+--
+-- Name: content_dislikes fk_rails_7b713a57e4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_dislikes
+    ADD CONSTRAINT fk_rails_7b713a57e4 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -745,6 +855,14 @@ ALTER TABLE ONLY public.adventures
 
 ALTER TABLE ONLY public.adventure_memberships
     ADD CONSTRAINT fk_rails_c2691b9523 FOREIGN KEY (adventure_id) REFERENCES public.adventures(id) ON DELETE CASCADE;
+
+
+--
+-- Name: content_dislikes fk_rails_ee55bd1797; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_dislikes
+    ADD CONSTRAINT fk_rails_ee55bd1797 FOREIGN KEY (content_id) REFERENCES public.contents(id) ON DELETE CASCADE;
 
 
 --
@@ -793,6 +911,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210204195328'),
 ('20210302233745'),
 ('20210318012620'),
-('20210318013948');
+('20210318013948'),
+('20210318042220'),
+('20210318042243'),
+('20210318042338');
 
 

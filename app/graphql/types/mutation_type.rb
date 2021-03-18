@@ -14,4 +14,6 @@ class Types::MutationType < Types::BaseObject
   field :adventure_step_form_field_response_bulk_upsert,
         resolver: Mutations::Adventure::Step::FormField::Response::BulkUpsertMutation
   field :content_view_create, resolver: Mutations::Content::View::CreateMutation
+  field :content_like_toggle, resolver: Mutations::Content::Like::ToggleMutation
+  field :content_dislike_toggle, resolver: Mutations::Content::Dislike::ToggleMutation
 end

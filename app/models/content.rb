@@ -5,6 +5,8 @@ class Content < ApplicationRecord
   friendly_id :slug_candidates, use: :slugged
   acts_as_taggable_on :tags
   has_many :views, dependent: :delete_all
+  has_many :likes, dependent: :delete_all
+  has_many :dislikes, dependent: :delete_all
   validates :name, :locale, :type, presence: true
   validates :locale, inclusion: { in: I18n.available_locales.map(&:to_s) }
   scope :published, -> { where(published: true) }

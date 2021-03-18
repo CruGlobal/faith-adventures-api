@@ -11,7 +11,19 @@ module Types::ContentInterface
   field :locale, Types::LocaleEnum, null: false
   field :adventures, Types::AdventureType.connection_type, null: false
   field :views_count, Integer, null: false
+  field :likes_count, Integer, null: false
+  field :dislikes_count, Integer, null: false
+  field :like, Boolean, 'authenticated users likes content', null: false
+  field :dislike, Boolean, 'authenticated users dislikes content', null: false
   orphan_types Types::Content::ArclightType
+
+  def like
+    context[:current_user]&.likes&.where(content_id: object.id)&.exists? || false
+  end
+
+  def dislike
+    context[:current_user]&.dislikes&.where(content_id: object.id)&.exists? || false
+  end
 
   def adventures
     scope = Adventure.left_outer_joins(:steps).published
