@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '3.2.0'
 
 gem 'acts_as_list'
 gem 'acts-as-taggable-on', '~> 7.0'
@@ -20,7 +20,7 @@ gem 'jwt'
 gem 'pg'
 gem 'puma'
 gem 'pundit'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 8.0.0'
 gem 'redis'
 gem 'rolify'
 gem 'rollbar'
